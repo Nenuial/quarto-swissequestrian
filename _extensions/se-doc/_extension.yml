@@ -1,0 +1,20 @@
+title: Se-doc
+author: Pascal Burkhard
+version: 1.0.0
+quarto-required: ">=1.6.0"
+contributes:
+  formats:
+    typst:
+      paper: a4
+      variables:
+        logo: ../se-resources/images/logo-se.svg
+      font-paths: ../se-resources/fonts
+      mainfont: Gilroy
+      margin:
+        left: 2cm
+        right: 2cm
+        top: 4cm
+        bottom: 2cm
+      template-partials:
+        - typst-template.typ
+        - typst-show.typ

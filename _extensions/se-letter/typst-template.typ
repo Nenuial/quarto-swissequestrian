@@ -515,9 +515,12 @@
     str(current-page) + "/" + str(page-count)
   },
 
-  $if(margin)$
-    margin: ($for(margin/pairs)$$margin.key$: $margin.value$,$endfor$),
-  $endif$
+  margin: (
+    left:   25mm,
+    right:  20mm,
+    top:    20mm,
+    bottom: 20mm,
+  ),
 
   font: "Source Sans Pro",
 

@@ -19,6 +19,12 @@ $endif$
           #link("tel:0041313354343", "+41 (0)31 335 43 43"), #link("mailto:info@swiss-equestrian.ch", "info@swiss-equestrian.ch"), #link("https://www.swiss-equestrian.ch", "swiss-equestrian.ch")
     ])
     #place(top + right, image("$logo$", width: 3.2cm), dx: -1.5cm, dy: 1.5cm)
+    $if(department)$
+    #place(top + right, dx: -2cm, dy: 5.5cm, [
+      #set text(fill: rgb("#00283c"), size: 14pt)
+        #strong(upper([$department$]))
+    ])
+    $endif$
   ],
 
   $if(annexes)$

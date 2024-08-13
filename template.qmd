@@ -1,14 +1,41 @@
 ---
 title: Lorem Ipsum
+subject: "Lettre type"
+sender:
+  name: Pascal Burkhard
+  address: Chemin du Marais 10, 1031 Mex
+signature:
+  name: Pascal Burkhard
+  title: "Responsable formation des juges de saut"
+recipient:
+  - Jean Dupond
+  - Rue Dufour 4
+  - 1111 La Prairie
+reference-signs:
+  "Votre référence": 2024-07-29-01
+department: |
+            | Richterausbildung
+            | Springen
+date: today
+lang: fr
+date-format: long
+annexes:
+  - "**Kopie an:**"
+  - "- Monika Elmer, TK Springen"
+  - "- Markus Niklaus, GS Swiss Equestrian"
 format:
-  se-doc-typst: default
+  se-letter-typst: default
 ---
-
-## Introduction
 
 Cupidatat laborum incididunt sint. Adipisicing consectetur sit eu magna. Elit elit velit ad in cillum anim aliqua nostrud quis commodo ut. Et eiusmod ut eu duis deserunt magna voluptate est mollit amet. Commodo ullamco et minim proident labore officia nisi est non. Consequat occaecat laboris tempor cillum eu ut nulla amet. Mollit enim aliqua sunt proident ullamco aute sunt velit anim et esse proident eiusmod culpa.
 
 Labore aute minim enim. Nulla esse excepteur in irure cupidatat culpa labore do sit tempor proident adipisicing. Eu culpa velit nisi nisi ullamco cillum. Cillum irure aliquip voluptate quis qui qui eiusmod consequat nostrud cillum aliqua tempor minim eiusmod aute. Esse exercitation eiusmod laboris do dolore sit dolore irure ipsum excepteur. Amet laboris nostrud aliqua. Magna qui ea labore reprehenderit do commodo tempor fugiat cillum ullamco cillum.
+
+Cupidatat laborum incididunt sint. Adipisicing consectetur sit eu magna. Elit elit velit ad in cillum anim aliqua nostrud quis commodo ut. Et eiusmod ut eu duis deserunt magna voluptate est mollit amet. Commodo ullamco et minim proident labore officia nisi est non. Consequat occaecat laboris tempor cillum eu ut nulla amet. Mollit enim aliqua sunt proident ullamco aute sunt velit anim et esse proident eiusmod culpa.
+
+Labore aute minim enim. Nulla esse excepteur in irure cupidatat culpa labore do sit tempor proident adipisicing. Eu culpa velit nisi nisi ullamco cillum. Cillum irure aliquip voluptate quis qui qui eiusmod consequat nostrud cillum aliqua tempor minim eiusmod aute. Esse exercitation eiusmod laboris do dolore sit dolore irure ipsum excepteur. Amet laboris nostrud aliqua. Magna qui ea labore reprehenderit do commodo tempor fugiat cillum ullamco cillum.
+
+Adipisicing do nulla ullamco. Cillum mollit anim officia ad velit et enim aliquip esse non proident ut laboris ipsum laborum. Ullamco aliquip ullamco cupidatat esse dolor eiusmod esse non minim ad nulla commodo velit. Officia excepteur fugiat anim ex irure est ut est sit. In ullamco pariatur esse cillum laboris voluptate adipisicing deserunt excepteur cillum ipsum nulla.
 
 {{< pagebreak >}}
 

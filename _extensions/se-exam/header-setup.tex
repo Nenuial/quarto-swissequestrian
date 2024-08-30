@@ -1,0 +1,105 @@
+% Package for translation command (see below)
+\usepackage{iflang}
+
+% Translation command for French/German/Italian
+\newcommand{\trans}[3]{\IfLanguageName{french}{#1}{\IfLanguageName{nswissgerman}{#2}{#3}}}
+
+% Package for total pagenumbers (used in footer)
+\usepackage{lastpage}
+
+% No figure numbering
+\usepackage[labelformat=empty]{caption}
+
+% Prevent orphans/widows
+\usepackage[all]{nowidow}
+
+% Tables and tabulars
+\usepackage{tabto,calc}
+\usepackage{longtable,ltxtable}
+\usepackage{tabu,array,multirow,multicol,adjustbox,booktabs}
+\usepackage{colortbl}
+\usepackage{makecell}
+\usepackage{tabularx}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
+\usepackage{hhline}
+
+% Package for math
+\usepackage{fp}
+
+% Package for special itemize
+\usepackage{enumitem}
+
+% Package for the blacksquare symbol
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% Avoid large space to equalise content
+\raggedbottom
+\flushbottom
+
+% Package for \uline{}
+\usepackage[normalem]{ulem}
+\renewcommand\ULthickness{2pt}%---> For changing thickness of underline
+\setlength\ULdepth{1.5ex}%\maxdimen ---> For changing depth of underline
+\renewcommand{\baselinestretch}{1}
+\pagestyle{empty}
+
+% Setup examdoc points
+\pointsinleftmargin
+\pointpoints{\trans{pt}{Pt}{pto}}{\trans{pts}{Pte}{pti}}
+\marginpointname{ \points}
+\pointformat{\footnotesize\boldmath\themarginpoints}
+%\boxedpoints
+\usehorizontalhalf
+\addpoints
+
+% Remove examdoc solution header
+\renewcommand{\solutiontitle}{}
+
+% Setup solutions with no breaks
+\BeforeBeginEnvironment{solutionorlines}{\par\nopagebreak\minipage{\linewidth}}
+\AfterEndEnvironment{solutionorlines}{\endminipage}
+\BeforeBeginEnvironment{solutionorbox}{\par\nopagebreak\minipage{\linewidth}}
+\AfterEndEnvironment{solutionorbox}{\endminipage}
+
+% Command for section point table
+\newcommand{\sectionpts}[1]{%
+	\ifprintanswers
+	\else
+		\bgroup
+		\def\arraystretch{2}
+		\begin{tabularx}{.5\textwidth}{|>{\bfseries}X|>{\bfseries}C|}
+			\hline
+			\trans{Points maximum}{Mögliche Punkte}{Punteggio possibile} & \pointsinrange{#1} \\
+			\hline
+			\trans{Points obtenus}{Erreichte Punkte}{Punteggio raggiunto} &\\
+			\hline
+		\end{tabularx}
+		\egroup
+	\fi
+}
+
+% Command for fillin
+\newcommand{\lng}[2][1cm]{%
+  \fillin[#2][#1]%
+}
+
+% Command for TRUE/FALSE
+\newcommand{\tf}[1]{%
+  \fillin[#1][0.8cm]\tabto{1cm}}
+
+% Command for TRUE/FALSE text boxes
+\newcommand{\tftext}[1]{%
+  \tabto{\CurrentLineWidth}%
+  \parbox[t][][t]{\linewidth-\TabPrevPos}{#1}}
+
+% Total point command
+\makeatletter
+\newcommand{\calcnumpoints}{\@ifundefined{exam@numpoints}{0}{\exam@numpoints}}
+\makeatother
+
+% Setup page geometry
+\usepackage[bindingoffset=0in,left=1.8cm,right=1.8cm,
+top=1cm,bottom=1in,headsep=.5\baselineskip]{geometry}

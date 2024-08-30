@@ -1,0 +1,28 @@
+title: "Swiss Equestrian Exams"
+author: "Pascal Burkhard"
+version: 1.0.0
+contributes:
+  format:
+    pdf:
+      documentclass: exam
+      classoption: []
+      template-partials:
+        - title.tex
+        - pandoc.tex
+        - before-body.tex
+        - after-body.tex
+      include-in-header: 
+        - header-setup.tex
+      papersize: a4
+      colorlinks: false
+      callout-icon: false
+      date-format: "long"
+      execute:
+        echo: false
+        warning: false
+        error: false
+        output: "asis"
+      variables:
+        banner: "../se-resources/images/header-se.png.pdf"
+        logo: "../se-resources/images/logo-se-white.png"
+        font-path: "../se-resources/fonts/"

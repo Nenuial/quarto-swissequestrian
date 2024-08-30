@@ -1,0 +1,86 @@
+\noindent
+\begin{minipage}[l]{.32\textwidth}%
+\noindent
+\includegraphics[width=5cm]{$banner$}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{.33\textwidth}%
+\begin{center}
+{\large \bfseries \par
+\Large \trans{Discipline Saut}{Disziplin Springen}{Disciplina salto} \\[2pt]
+\small $title$ \par}
+\end{center}
+\end{minipage}
+\begin{minipage}[l]{.32\textwidth}%
+\begin{flushright}
+\noindent%
+{\bfseries \trans{Session}{Session}{Sessione} $session$}\\
+{\footnotesize $date$}
+\end{flushright}
+\end{minipage}
+\vspace{0.5cm}
+\par
+\noindent
+\uline{\trans{Nom}{Name}{Nome}: \fillin[][2.4in] \hfill \trans{Prénom}{Vorname}{Cognome}: \fillin[][2.4in]}
+\vspace{0.2cm}
+\renewcommand\ULthickness{.5pt}
+
+\trans{Avec ma signature je confirme que toutes les feuilles d'examen sont jointes à la présente page.}{Mit meiner Unterschrift bestätige ich, dass alle Prüfungsblätter diesem Deckblatt beigelegt sind.}{Con la mia firma confermo che tutti i fogli d’esame sono allegati a questo foglio di copertina.}\\
+
+\textbf{\trans{Signature}{Unterschrift}{Firma}: \fillin[][2.4in]}\vspace{1cm}
+
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}l l@{}}
+	\hline
+	\trans{Base}{Basis}{Basi}: & \trans{Cours, règlements et prescriptions FSSE}{Kurse, Reglemente und Weisungen SVPS}{Corsi, Regolamenti e Ordinanze della FSSE}\\
+    \trans{Date d'examen}{Prüfungsdatum}{Data dell'esame}: & $date$\\
+	\trans{Lieu de l'examen}{Prüfungsort}{Luogo}: & $place$\\
+	\trans{Temps accordé}{Prüfungsdauer}{Durata dell'esame}: & $time_allowed$\\
+	\trans{Nombre de pages}{Total Anzahl Seiten}{Totale pagine}: & \pageref{LastPage}\\
+	\trans{Documents autorisés}{Erlaubte Dokumente}{Documenti permessi}: & \trans{Règlements et prescriptions FSSE}{Reglemente und Weisungen SVPS}{Regolamenti e Ordinanze della FSSE}\\
+	\trans{Matériel supplémentaire}{Erlaubte Hilfsmittel}{Aiuti permessi}: & \trans{Calculatrice et supports de cours}{Taschenrechner und Kursunterlagen}{Calcolatrice e documentazione dei corsi}\\
+	\hline
+\end{tabularx}
+
+\subsection*{\trans{Indications générales}{Allgemeine Hinweise}{Indicazioni generali}}
+
+\begin{itemize}[label=\tiny $$\blacksquare$$]
+	\item \trans{Veuillez utiliser un stylo bleu ou noir pour remplir l'examen.}{Es dürfen in der Prüfung nur dokumentenechte Schreibstifte in den Farben Blau oder Schwarz benutzt werden.}{Per l'esame si possono utilizzare solo penne a biro blu o nere indelebili.}
+	\item \trans{Inscrivez votre nom sur chaque feuille d'examen.}{Beschriften Sie jedes Prüfungsblatt mit Ihrem Namen.}{Contrassegni ogni foglio d’esame con il suo nome.}
+	\item \trans{Signez la première page de l'examen avant de le rendre.}{Unterschreiben Sie das Prüfungsdeckblatt vor der Abgabe an die Prüfungsaufsicht.}{Apponga la sua firma sul foglio di copertina dell'esame.}
+	\item \trans{Si une question vous paraît ambiguë, marquez clairement votre raisonnement dans la réponse.}{Sollten Sie aufgrund einer für Sie unklaren Aufgabenstellung den Eindruck haben, dass Sie Annahmen treffen müssen, dann umschreiben Sie diese bitte in Ihrer Lösung.}{Nel caso in cui, in seguito ad una domanda poco chiara,  dovesse aver l'impressione di dover fare delle supposizioni, lo indichi per favore nella sua soluzione.}
+	\item \trans{Le cas échéant, vous trouverez des indications plus spécifiques dans les consignes.}{Besondere Hinweise finden Sie in der jeweiligen Prüfungsaufgabe.}{Le indicazioni particolari sono menzionate nei rispettivi compiti d’esame.}
+	\item \trans{En principe, les surveillants ne répondent pas aux questions.}{Die Prüfungsaufsicht beantwortet keine fachlichen Fragen zu den Prüfungsaufgaben.}{Gli esaminatori non risponderanno a domande su temi specifici dei compiti d'esame.}
+	\item \trans{Lorsque vous avez terminé, assurez-vous d'avoir répondu à toutes les questions, d'avoir signé l'examen et remettez votre copie à l'un des surveillants.}{Wenn Sie das Gefühl haben, die Prüfung beendet zu haben, geben Sie den Prüfungsbogen bei der Prüfungsaufsicht ab.}{Se avrà l'impressione di aver terminato l'esame, lo consegni all’esaminatore.}
+\end{itemize}
+
+\vspace{.3cm}
+\bgroup
+\FPeval{\result}{round(\calcnumpoints*0.8,0)}
+\def\arraystretch{2}
+\begin{tabularx}{\textwidth}{|>{\bfseries}X|>{\bfseries}C||>{\bfseries}C|>{\bfseries}C|}
+	\hline
+	\trans{Points maximum}{Mögliche Punkte}{Punteggio possibile} & \pointsinrange{exampoints} & \cellcolor{green}\trans{Réussi}{Erfüllt}{Superato} \scriptsize ($$\geqslant \result$$) &\cellcolor{red}\trans{Échec}{Nicht Erfüllt}{Non superato} \scriptsize ($$< \result$$) \\
+	\hline
+	\trans{Points obtenus}{Erreichte Punkte}{Punteggio raggiunto} &&&\\
+	\hline
+\end{tabularx}
+\egroup
+
+\begin{tabularx}{\textwidth}{@{}|X||X|@{}}
+	\hline
+	\vspace{0.1cm}\textbf{\trans{Corrections par}{Korrektur durch}{Corretto da}:} & \vspace{0.1cm}\textbf{\trans{Signature}{Unterschrift}{Firma}:} \\
+	\begin{itemize}[label=\raisebox{-0.15em}{\huge $$\square$$}]
+
+  $for(correctors)$
+    \item $correctors$
+  $endfor$
+
+	\end{itemize} & \\
+	\hline
+\end{tabularx}
+\clearpage
+\newgeometry{bindingoffset=0in,left=1.8cm,right=1.8cm,
+top=.9in,bottom=1in,headsep=.5\baselineskip}
+
+\begin{questions}
+\begingradingrange{exampoints}

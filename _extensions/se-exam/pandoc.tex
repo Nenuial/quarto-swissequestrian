@@ -1,0 +1,40 @@
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+$tightlist.tex()$
+$tables.tex()$
+$graphics.tex()$
+$citations.tex()$
+
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+% Font setup
+\setmainfont[Extension = .ttf,Path =
+$font-path$,UprightFont = *-Light,ItalicFont =
+*-LightItalic,BoldFont = *-Regular,BoldItalicFont = *-RegularItalic]{Gilroy}
+\setsansfont[Extension = .ttf,Path =
+$font-path$,UprightFont = *-Light,ItalicFont =
+*-LightItalic,BoldFont = *-Regular,BoldItalicFont = *-RegularItalic]{Gilroy}
+\setmathfont[Path = $font-path$,Extension =
+.otf]{FiraMath-Light}
+
+% Environment that does nothing
+\newenvironment{emptyenv}{}{}
+
+% Setup header and footers
+\pagestyle{headandfoot}
+\runningheadrule
+\runningheader{\includegraphics[width=1cm]{$logo$}}
+{\footnotesize \bfseries $title$ \\}
+{\footnotesize \trans{Nom~}{Name}{Nome}:\hspace{4cm}}
+\footrule
+\footer{\footnotesize PBU/\trans{FSSE}{SVPS}{FSSE}}
+{\footnotesize $date$}
+{\footnotesize \trans{Page}{Seite}{Pagina} \thepage/\pageref{LastPage}}
+
+% Prevent orphan/widow questions
+\BeforeBeginEnvironment{solutionorlines}{\par\nopagebreak\minipage{\linewidth}}
+\AfterEndEnvironment{solutionorlines}{\endminipage}

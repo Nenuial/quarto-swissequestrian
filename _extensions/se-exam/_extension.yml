@@ -1,6 +1,6 @@
 title: "Swiss Equestrian Exams"
 author: "Pascal Burkhard"
-version: 1.0.0
+version: 1.0.1
 contributes:
   format:
     pdf:
@@ -23,6 +23,6 @@ contributes:
         error: false
         output: "asis"
       variables:
-        banner: "../se-resources/images/header-se.png.pdf"
+        banner: "../se-resources/images/logo-se-white.png"
         logo: "../se-resources/images/logo-se-white.png"
         font-path: "../se-resources/fonts/"

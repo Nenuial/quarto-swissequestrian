@@ -1,6 +1,6 @@
 title: "Swiss Equestrian Exams"
 author: "Pascal Burkhard"
-version: 1.0.3
+version: 1.0.4
 contributes:
   format:
     pdf:
@@ -26,3 +26,4 @@ contributes:
         banner: "../se-resources/images/logo-se-white.png"
         logo: "../se-resources/images/logo-se-white.png"
         font-path: "../se-resources/fonts/"
+source: nenuial/quarto-swissequestrian

@@ -1,6 +1,6 @@
 title: Swiss Equestrian Letter
 author: Pascal Burkhard
-version: 1.0.1
+version: 1.0.2
 quarto-required: ">=1.5.50"
 contributes:
   formats:
@@ -18,3 +18,4 @@ contributes:
       template-partials:
         - typst-template.typ
         - typst-show.typ
+source: nenuial/quarto-swissequestrian

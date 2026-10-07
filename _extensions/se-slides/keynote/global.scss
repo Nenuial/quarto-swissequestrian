@@ -1,7 +1,6 @@
 /*-- scss:defaults --*/
 
-@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:ital,wght@0,100;0,200;0,300;0,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400&family=Fira+Code:wght@300;400&display=swap');
 
 $font-family-sans-serif: 'Fira Sans', sans-serif !default;
 $font-family-monospace: 'Fira Code', monospace !default;
@@ -28,8 +27,12 @@ $presentation-font-size-root: 36px !default;
 }
 
 $codewindow-bg: null !default;
+$danger-color: #D9534F !default;
 
 /*-- scss:rules --*/
+
+// Translucent panel in the palette's background color; `.box.opaque` drops the transparency.
+$box-bg: rgba($body-bg, 0.6) !default;
 
 @if $codewindow-bg {
   .codewindow,
@@ -70,7 +73,6 @@ $codewindow-bg: null !default;
 }
 
 .reveal .footer {
-  float: left;
   bottom: -30px !important;
   z-index: 1000 !important;
   color: $presentation-heading-color;
@@ -85,17 +87,16 @@ $codewindow-bg: null !default;
 
 
 .scroll-page ~ .footer {
-    float: left;
-    bottom: 25px !important;
-    z-index: 1000 !important;
-    color: $presentation-heading-color;
-  }
+  bottom: 25px !important;
+  z-index: 1000 !important;
+  color: $presentation-heading-color;
+}
 
 .scroll-page ~ .slide-logo {
-    bottom: 10px !important;
-    right: 20px !important;
-    max-height: 2rem !important;
-    z-index: 1000 !important;
+  bottom: 10px !important;
+  right: 20px !important;
+  max-height: 2rem !important;
+  z-index: 1000 !important;
 }
 
 .underline {
@@ -125,10 +126,7 @@ ul {
 }
 
 html.print-pdf .slides {
-  border-left: 0px;
-  border-top: 0px;
-  border-bottom: 0px;
-  border-right: 0px;
+  border: 0;
 }
 
 #title-slide {
@@ -153,7 +151,6 @@ html.print-pdf .slides {
   .quarto-title-author-email {
     font-style: italic;
     font-size: 80%;
-    // color: #7F7F7F;
   }
 
   .author,
@@ -174,7 +171,7 @@ html.print-pdf .slides {
       width: 100%;
     }
   }
-  
+
   .date {
     vertical-align: top;
     justify-content: right;
@@ -210,12 +207,13 @@ html.print-pdf .slides {
 .pull-left {
   float: left;
   width: 50% !important;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
+
 .pull-right {
   float: right;
   width: 50% !important;
-  margin-bottom:20px;
+  margin-bottom: 20px;
 }
 
 img.sticker-float-right {
@@ -253,7 +251,7 @@ figcaption {
   border-radius: 25px;
   padding: 5px 0px 5px 25px;
   margin-bottom: -100px;
-  background-color: #ffffff99;
+  background-color: $box-bg;
 }
 
 .box-blond {
@@ -278,10 +276,7 @@ figcaption {
 }
 
 .box.opaque {
-  width: 100%;
-  border-radius: 25px;
-  padding: 5px 0px 5px 25px;
-  background-color: #ffffff;
+  background-color: rgba($box-bg, 1);
 }
 
 .box p{
@@ -293,6 +288,7 @@ figcaption {
   filter: blur(5px);
   opacity: 50%;
 }
+
 .reveal .slides section .fragment.blur {
   filter: blur(5px);
   opacity: 50%;
@@ -301,7 +297,7 @@ figcaption {
 
 .reveal .slides section .fragment.blur.visible {
   filter: none;
-  opacity: 100%
+  opacity: 100%;
 }
 
 img.icon {
@@ -334,7 +330,7 @@ img.icon {
 }
 
 span.danger {
-  color: #D9534F;
+  color: $danger-color;
 }
 
 span.term {
@@ -342,10 +338,10 @@ span.term {
 }
 
 .fragment-remove .fragment.fade-out.visible {
-    display: none;
-    height:0px;
-    line-height: 0px;
-    font-size: 0px;
+  display: none;
+  height: 0px;
+  line-height: 0px;
+  font-size: 0px;
 }
 
 .reveal code {

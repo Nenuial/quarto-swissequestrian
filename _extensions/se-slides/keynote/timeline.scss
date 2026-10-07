@@ -2,20 +2,11 @@
 
 /*-- scss:rules --*/
 
-.timeline {
-  box-sizing: border-box; 
-}
-  
-.timeline::before {
-  box-sizing: border-box;
-}
-
-.timeline * {
-  box-sizing: border-box;
-}
-
+.timeline,
+.timeline::before,
+.timeline *,
 .timeline *::before {
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 /* Main logic */
@@ -26,7 +17,7 @@
   height: 100%;
   margin: 0 auto;
   overflow-y: hidden;
-  margin-top: 0; }
+}
 
 .timeline .timeline-block {
   margin: 20px 0;
@@ -216,14 +207,12 @@
   height: 40px;
   line-height: 40px;
   border-radius: 0;
-  background-color: transparent; 
+  background-color: transparent;
 }
 
 .timeline-icon.timeline-icon-text span {
   display: inline-block;
   width: auto;
-  /* background-color: #EEE;
-  border: 1px solid #e5e5e5; */
   padding: 0 10px;
 }
 

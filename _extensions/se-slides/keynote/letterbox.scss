@@ -46,19 +46,26 @@ html.print-pdf .quarto-dark {
   background-color: $body-bg !important;
 }
 
-.image-left {
+// Chapter images: a full-height 2:3 frame at the slide edge. Any image fills it,
+// cropped around its center, whatever its own proportions.
+$image-side-width: calc(#{$slide-height} * 2 / 3);
+
+.image-left,
+.image-right {
   @include full-screen;
+  width: $image-side-width !important;
+  max-width: $image-side-width !important;
+  object-fit: cover;
+  object-position: center;
+}
+
+.image-left {
   left: -$border-leftright-width;
-  width: calc(#{$slide-width} / 2) !important;
-  max-width: calc(#{$slide-width} / 2) !important;
   z-index: 500;
 }
 
 .image-right {
-  @include full-screen;
   right: -$border-leftright-width;
-  width: calc(#{$slide-width} / 2) !important;
-  max-width: calc(#{$slide-width} / 2) !important;
 }
 
 @mixin quarter-screen {

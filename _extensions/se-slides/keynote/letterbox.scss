@@ -1,0 +1,222 @@
+/*-- scss:defaults --*/
+
+$border-leftright-width: 80px;
+$border-updown-width: 40px;
+
+/*-- scss:rules --*/
+
+$slide-width: calc(var(--slide-width) + #{$border-leftright-width} * 2);
+$slide-height: calc(var(--slide-height) + #{$border-updown-width} * 2);
+
+@mixin full-screen {
+  position: absolute;
+  top: -$border-updown-width;
+  right: -$border-leftright-width;
+  height: $slide-height !important;
+  width: $slide-width !important;
+  max-height: $slide-height !important;
+  max-width: $slide-width !important;
+  margin: 0 !important;
+  z-index: -1;
+}
+
+.quarto-light {
+  background-color: #FAFAFA;
+}
+
+.quarto-dark {
+  background-color: #FAFAFA;
+}
+
+html.print-pdf .quarto-light {
+  background-color: $body-bg;
+}
+
+html.print-pdf .quarto-dark {
+  background-color: $body-bg;
+}
+
+.slides {
+  background-color: $body-bg;
+  border-style: solid;
+  border-color: $body-bg;
+  box-shadow: #222222 0px 0px 30px 0px;
+
+  border-left-width: 80px;
+  border-right-width: 80px;
+  border-top-width: 40px;
+  border-bottom-width: 40px;
+}
+
+.slides:has(.scroll-page) {
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-right-width: 0px;
+}
+
+.scroll-page {
+  background-color: $body-bg !important;
+}
+
+.image-left {
+  @include full-screen;
+  left: -$border-leftright-width;
+  width: $slide-width / 2 !important;
+  max-width: $slide-width / 2 !important;
+  z-index: 500;
+}
+
+.image-right {
+  @include full-screen;
+  right: -$border-leftright-width;
+  width: $slide-width / 2 !important;
+  max-width: $slide-width / 2 !important;
+}
+
+@mixin quarter-screen {
+  background-size: cover;
+  background-position: center;
+  width: calc(($slide-width / 2) - 5px) !important;
+  height: calc(($slide-height / 2) - 5px) !important;
+}
+
+@mixin half-screen {
+  background-size: cover;
+  background-position: center;
+  width: calc(($slide-width / 2) - 5px) !important;
+}
+
+@mixin flex-center-overflow {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden
+}
+
+@mixin flex-img-cover {
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}
+
+.full-frame {
+  @include full-screen;
+  width: calc($slide-width + $border-leftright-width) !important;
+  height: calc($slide-height + $border-updown-width) !important;
+  left: -$border-leftright-width;
+}
+
+.full-frame iframe {
+  height: 100%;
+  width: 100%;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  z-index: 1 !important;
+}
+
+.left-half {
+  @include full-screen;
+  @include half-screen;
+  @include flex-center-overflow;
+  left: -$border-leftright-width;
+}
+
+.left-top-quarter {
+  @include full-screen;
+  @include quarter-screen;
+  @include flex-center-overflow;
+  left: -$border-leftright-width;
+}
+
+.left-bottom-quarter {
+  @include full-screen;
+  @include quarter-screen;
+  @include flex-center-overflow;
+  left: -$border-leftright-width;
+  top: calc(($slide-height / 2) - $border-updown-width + 5px);
+}
+
+.right-half {
+  @include full-screen;
+  @include half-screen;
+  @include flex-center-overflow;
+  right: -$border-leftright-width;
+}
+
+.right-top-quarter {
+  @include full-screen;
+  @include quarter-screen;
+  @include flex-center-overflow;
+  right: -$border-leftright-width;
+}
+
+.right-bottom-quarter {
+  @include full-screen;
+  @include quarter-screen;
+  @include flex-center-overflow;
+  right: -$border-leftright-width;
+  top: calc(($slide-height / 2) - $border-updown-width + 5px);
+}
+
+.image-cover {
+  @include flex-center-overflow;
+}
+
+.left-half img,
+.left-top-quarter img,
+.left-bottom-quarter img,
+.right-half img,
+.right-top-quarter img,
+.right-bottom-quarter img,
+.image-cover img {
+  @include flex-img-cover;
+}
+
+.drop-shadow img {
+  box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.6);
+}
+
+.no-caption figcaption {
+  display: none;
+}
+
+.background-color-div {
+  @include full-screen;
+}
+
+.background-image-div {
+  @include full-screen;
+}
+
+.background-video-div {
+  @include full-screen;
+  max-width: none !important;
+  max-height: none !important;
+  -o-object-fit: cover;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.background-iframe-div {
+  @include full-screen;
+  max-width: none !important;
+  max-height: none !important;
+  -o-object-fit: cover;
+  object-fit: cover;
+  z-index: -1 !important;
+}
+
+.reveal .slide-menu-button {
+  left: 8px - $border-leftright-width / 2 !important;
+  bottom: 8px - $border-updown-width / 2 !important;
+  pointer-events: auto;
+}
+
+.reveal .progress {
+  z-index: 100;
+  bottom: - $border-updown-width;
+  width: $slide-width !important;
+  left: -$border-leftright-width;
+}

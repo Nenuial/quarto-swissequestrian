@@ -1,0 +1,446 @@
+/*-- scss:defaults --*/
+
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:ital,wght@0,100;0,200;0,300;0,400&display=swap');
+
+$font-family-sans-serif: 'Fira Sans', sans-serif !default;
+$font-family-monospace: 'Fira Code', monospace !default;
+$presentation-heading-font: 'Fira Sans', sans-serif !default;
+$presentation-heading-font-weight: 400 !default;
+$presentation-font-size-root: 36px !default;
+
+// Derived palette values. Palettes only need to set their base colors and can
+// override any of these. Without a palette, Quarto's own defaults apply.
+@if global-variable-exists(body-bg) and global-variable-exists(body-color) {
+  $_dark-tone: if(lightness($body-bg) < lightness($body-color), $body-bg, $body-color);
+  $_light-tone: if(lightness($body-bg) < lightness($body-color), $body-color, $body-bg);
+  $light-bg-text-color: $_dark-tone !default !global;
+  $light-bg-code-color: $_dark-tone !default !global;
+  $dark-bg-text-color: $_light-tone !default !global;
+  $dark-bg-code-color: $_light-tone !default !global;
+  $code-bg: darken($body-bg, 5%) !default !global;
+}
+
+@if global-variable-exists(link-color) {
+  $link-color-hover: lighten($link-color, 15%) !default !global;
+  $light-bg-link-color: $link-color !default !global;
+  $dark-bg-link-color: $link-color !default !global;
+}
+
+$codewindow-bg: null !default;
+
+/*-- scss:rules --*/
+
+@if $codewindow-bg {
+  .codewindow,
+  .codewindow .header .file {
+    background: $codewindow-bg !important;
+  }
+}
+
+.reveal {
+  font-weight: 200;
+}
+
+.slide h1,
+.slide h2 {
+  border-bottom: 2px solid $presentation-heading-color;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.slide.has-light-background h2,
+.slide.has-light-background h3 {
+  color: darken($presentation-heading-color, 20%);
+}
+
+.slide.has-dark-background h2,
+.slide.has-dark-background h3 {
+  color: lighten($presentation-heading-color, 20%);
+}
+
+.no-title h1,
+.no-title h2 {
+  display: none !important;
+}
+
+.no-title h3,
+.no-title p {
+  margin-left: 0em !important;
+}
+
+.reveal .footer {
+  float: left;
+  bottom: -30px !important;
+  z-index: 1000 !important;
+  color: $presentation-heading-color;
+}
+
+.reveal .slide-logo {
+  bottom: -35px !important;
+  right: 0px !important;
+  max-height: 2rem !important;
+  z-index: 1000 !important;
+}
+
+
+.scroll-page ~ .footer {
+    float: left;
+    bottom: 25px !important;
+    z-index: 1000 !important;
+    color: $presentation-heading-color;
+  }
+
+.scroll-page ~ .slide-logo {
+    bottom: 10px !important;
+    right: 20px !important;
+    max-height: 2rem !important;
+    z-index: 1000 !important;
+}
+
+.underline {
+  border-bottom: 2px solid;
+}
+
+.chapter {
+  text-align: center;
+  border-bottom: 2px solid $body-color;
+  font-weight: 200 !important;
+  color: $body-color !important;
+}
+
+.all-caps {
+  text-transform: uppercase !important;
+}
+
+.v-align {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  height: 90%;
+}
+
+ul {
+  list-style-type: square !important;
+}
+
+html.print-pdf .slides {
+  border-left: 0px;
+  border-top: 0px;
+  border-bottom: 0px;
+  border-right: 0px;
+}
+
+#title-slide {
+  text-align: left;
+
+  .title {
+    color: $presentation-heading-color;
+    margin-left: 0px !important;
+    border-bottom: 2px solid $presentation-heading-color;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .subtitle {
+    color: $body-color;
+    font-style: italic;
+    font-variant: small-caps;
+  }
+
+  .institute,
+  .quarto-title-affiliation,
+  .quarto-title-author-email {
+    font-style: italic;
+    font-size: 80%;
+    // color: #7F7F7F;
+  }
+
+  .author,
+  .quarto-title-author-name {
+    color: $body-color;
+  }
+
+  .quarto-title-authors {
+    display: inline-block;
+    justify-content: left;
+    font-size: 80%;
+    margin-right: auto;
+    vertical-align: top;
+
+    .quarto-title-author {
+      padding-left: 0em;
+      padding-right: 0em;
+      width: 100%;
+    }
+  }
+  
+  .date {
+    vertical-align: top;
+    justify-content: right;
+    float: right;
+    margin-left: auto;
+    margin-top: 0em;
+    font-size: 80%;
+  }
+}
+
+.v-center-bottom {
+  display: flex;
+  justify-content: center;
+  align-items: self-end;
+}
+
+.v-center {
+  display: flex;
+  justify-content: center;
+  align-items: self-end;
+}
+
+.v-right {
+  display: flex;
+  justify-content: right;
+  align-items: self-end;
+}
+
+.row {
+  margin-top: 10px;
+}
+
+.pull-left {
+  float: left;
+  width: 50% !important;
+  margin-bottom:20px;
+}
+.pull-right {
+  float: right;
+  width: 50% !important;
+  margin-bottom:20px;
+}
+
+img.sticker-float-right {
+  height: 160px;
+  position: absolute;
+  top: -0.5em;
+  right: -1em;
+  z-index: 1;
+}
+
+img.sticker-float-left {
+  height: 160px;
+  position: absolute;
+  top: -0.5em;
+  left: -1em;
+  z-index: 1;
+}
+
+img.sticker-float-midright {
+  height: 160px;
+  position: absolute;
+  top: -0.5em;
+  right: 12em;
+  z-index: 1;
+}
+
+figcaption {
+  font-size: 50%;
+  text-align: center;
+  margin-top: 0.5em;
+}
+
+.box {
+  width: 100%;
+  border-radius: 25px;
+  padding: 5px 0px 5px 25px;
+  margin-bottom: -100px;
+  background-color: #ffffff99;
+}
+
+.box-blond {
+  width: 100%;
+  border-radius: 25px;
+  padding: 5px 0px 5px 25px;
+  margin-bottom: -100px;
+  background-color: #faf0cadd;
+}
+
+.center {
+  text-align: center;
+}
+
+.center-70p {
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+.v-fill {
+  height: 100%;
+}
+
+.box.opaque {
+  width: 100%;
+  border-radius: 25px;
+  padding: 5px 0px 5px 25px;
+  background-color: #ffffff;
+}
+
+.box p{
+  margin: 10px 20px 0px 0px;
+}
+
+
+.blur {
+  filter: blur(5px);
+  opacity: 50%;
+}
+.reveal .slides section .fragment.blur {
+  filter: blur(5px);
+  opacity: 50%;
+  visibility: visible;
+}
+
+.reveal .slides section .fragment.blur.visible {
+  filter: none;
+  opacity: 100%
+}
+
+img.icon {
+  height: 0.75em;
+  margin: 0;
+}
+
+.dateplace {
+  font-size: 35px;
+  margin-left: 0.6em !important;
+  padding-bottom: 1.2em;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 70px;
+  margin-top: -0.5em !important;
+  margin-left: 0.3em !important;
+}
+
+@keyframes blur {
+  0%   {filter: blur(0px);  opacity: 100%;}
+  100% {filter: blur(5px);  opacity: 50%;}
+}
+
+.title>p>strong.blur {
+  animation-name: blur;
+  animation-duration: 3s;
+  animation-timing-function: ease-in-out;
+}
+
+span.danger {
+  color: #D9534F;
+}
+
+span.term {
+  color: #4582ec;
+}
+
+.fragment-remove .fragment.fade-out.visible {
+    display: none;
+    height:0px;
+    line-height: 0px;
+    font-size: 0px;
+}
+
+.reveal code {
+  white-space: pre;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+
+.reveal pre {
+  font-size: 70%;
+}
+
+.cell {
+  width: 100%;
+}
+
+.cell-output {
+  font-size: 60%;
+  border-radius: 6px;
+  border: 1px solid $body-color;
+  background-color: darken($body-bg, 5%);
+  overflow-x: auto;
+}
+
+.cell-output pre, .cell-output code {
+  border-radius: 6px;
+}
+
+.kbd {
+  border: 1px solid $body-color;
+  border-radius: 4px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+
+.symbol {
+  font-family: 'Fira Code';
+}
+
+.quote-box {
+  background-color: #b0b0b0;
+  color: $presentation-heading-color;
+  padding: 20px 40px;
+  border-radius: 5px;
+  position: relative;
+  max-width: 600px;
+  min-width: 400px;
+  text-align: center;
+  clear: both;
+}
+
+.quote-box p {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.author {
+  font-weight: 900;
+  color: $selection-color;
+  margin-top: 30px;
+  margin-right: 40px;
+  max-width: 600px;
+  width: 100%;
+  text-align: right;
+}
+
+.quote-box::after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 20px 20px 0 20px;
+  border-color: #b0b0b0 transparent transparent transparent;
+  position: absolute;
+  bottom: -20px;
+  left: 80%;
+  transform: translateX(-50%);
+}
+
+.bg-white {
+  background-color: #fffeea;
+}
+
+.reveal .smaller .callout.callout-style-default .callout-icon::before,
+.reveal .smaller .callout.callout-style-simple .callout-icon::before {
+  height: 1rem;
+  width: 1rem;
+  background-size: 1rem 1rem;
+}
+
+.reveal .callout.callout-titled .callout-icon::before {
+  margin-top: .7rem;
+}
+
+.reveal div.callout-title {
+  color: $body-color !important;
+}

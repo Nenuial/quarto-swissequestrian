@@ -1,0 +1,7 @@
+# Codewindow by Emil Hvitfeldt (emilhvitfeldt/quarto-revealjs-codewindow v1.4.0), bundled
+# as a plain revealjs plugin so every theme can reference this single copy by path.
+name: RevealCodewindow
+script:
+  - codewindow.js
+stylesheet:
+  - codewindow.css

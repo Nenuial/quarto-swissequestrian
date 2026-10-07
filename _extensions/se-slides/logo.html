@@ -1,0 +1,38 @@
+<script>
+  function updateLogoPosition(event) {
+    const logo = document.querySelector("img.slide-logo");
+    if (logo) {
+      if (event.indexh > 0) {
+        logo.classList.add("slide-logo-small");
+      } else {
+        logo.classList.remove("slide-logo-small");
+      }
+    } else {
+      console.warn('No logo element found');
+    }
+  }
+function updateImageSuffix(event) {
+  const currentSlide = Reveal.getCurrentSlide();
+  const images = document.querySelectorAll("img");
+
+  images.forEach((img) => {
+    if (currentSlide.classList.contains("has-dark-background")) {
+      if (img.src.includes("-light")) {
+        img.src = img.src.replace("-light", "-dark");
+      }
+    } else {
+      if (img.src.includes("-dark")) {
+        img.src = img.src.replace("-dark", "-light");
+      }
+    }
+  });
+}
+
+function updateSlide(event) {
+  updateLogoPosition(event);
+  updateImageSuffix(event);
+}
+
+Reveal.addEventListener('ready', updateSlide);
+Reveal.addEventListener('slidechanged', updateSlide);
+</script>

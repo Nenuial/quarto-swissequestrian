@@ -1,0 +1,20 @@
+# Shared theme files in keynote/ are copied from nenuial/quarto-keynote (sync-shared.sh).
+title: Swiss Equestrian slides
+author: Pascal Burkhard
+version: 1.0.0
+quarto-required: ">=1.6.0"
+contributes:
+  formats:
+    revealjs:
+      theme: ["keynote/global.scss", "keynote/letterbox.scss", "keynote/timeline.scss", "keynote/custom-callouts.scss", "se-slides.scss"]
+      include-after-body:
+        - "keynote/theme.html"
+        - "logo.html"
+      filters:
+        - keynote/custom-callouts.lua
+      width: 1280
+      height: 720
+      logo: ../se-resources/images/logo-se-dark.svg
+      title-slide-attributes:
+        data-background-color: "#00283c"
+source: nenuial/quarto-swissequestrian

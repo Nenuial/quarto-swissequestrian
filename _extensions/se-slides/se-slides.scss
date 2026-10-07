@@ -1,0 +1,62 @@
+/*-- scss:defaults --*/
+// Swiss Equestrian palette on top of the shared keynote theme (nenuial/quarto-keynote).
+
+$font-family-sans-serif: 'Gilroy', sans-serif;
+$font-family-monospace: 'Gilroy', monospace;
+$presentation-heading-font: 'Gilroy', sans-serif;
+
+$body-bg: white; // Background color
+$body-color: #363636; // Default text color
+$link-color: #da0200; // Link color
+$selection-bg: #363636; // Color of selection
+$selection-color: #da0200; // Color of selected text
+$presentation-heading-color: #00283c; // Color for headings
+
+$code-bg: #4D5566;
+
+/*-- scss:rules --*/
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot');
+  src: local('Gilroy Light'), local('Gilroy-Light'),
+    url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.eot?#iefix') format('embedded-opentype'),
+    url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.woff') format('woff'),
+    url('https://cdn.jsdelivr.net/gh/repalash/gilroy-free-webfont@fonts/Gilroy-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+.reveal .slide-logo {
+  top: 0px;
+  right: 0px;
+  max-height: 120px !important;
+  z-index: 200 !important;
+}
+
+.reveal .slide-logo-small {
+  top: -10px !important;
+  right: 0px !important;
+  max-height: 60px !important;
+}
+
+
+#title-slide {
+  text-align: left;
+  padding-top: 50vh;
+
+  .title {
+    color: white;
+    font-weight: 600;
+    border-bottom: 2px solid white;
+  }
+
+  .subtitle {
+    color: white;
+  }
+
+  .author,
+  .quarto-title-author-name {
+    color: white;
+  }
+}

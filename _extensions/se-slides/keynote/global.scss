@@ -129,6 +129,31 @@ html.print-pdf .slides {
   border: 0;
 }
 
+// Print view: theme.html copies the footer and logo into a frame over the slide
+// on every page, so the offsets above place them as in the letterbox on screen.
+html.print-pdf .reveal > .footer,
+html.print-pdf .reveal > .slide-logo,
+html.print-pdf .reveal .slides > .footer,
+html.print-pdf .reveal .slides > .slide-logo {
+  display: none !important;
+}
+
+html.print-pdf .reveal .pdf-page > .print-slide-frame {
+  position: absolute;
+  left: calc((100% - var(--slide-width)) / 2);
+  top: calc((100% - var(--slide-height)) / 2);
+  width: var(--slide-width);
+  height: var(--slide-height);
+  z-index: 1000;
+  pointer-events: none;
+}
+
+html.print-pdf .reveal .print-slide-frame > .footer,
+html.print-pdf .reveal .print-slide-frame > .slide-logo {
+  position: absolute !important;
+  display: block !important;
+}
+
 #title-slide {
   text-align: left;
 

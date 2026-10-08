@@ -34,7 +34,9 @@ $code-bg: #4D5566;
   z-index: 200 !important;
 }
 
-.reveal .slide-logo-small {
+// Print view has no slide changes, so use the small logo after the title page
+.reveal .slide-logo-small,
+html.print-pdf .reveal .pdf-page + .pdf-page .slide-logo {
   top: -10px !important;
   right: 0px !important;
   max-height: 60px !important;

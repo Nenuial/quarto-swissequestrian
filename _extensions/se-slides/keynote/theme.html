@@ -158,6 +158,40 @@ Reveal.on('ready', () => {
 </script>
 
 <script>
+// Print view: the footer and logo are single fixed elements, so copy them into
+// a frame over the slide on every page, except on slides with a no-footer or
+// no-logo class
+function addPrintFooterAndLogo() {
+  const pages = document.querySelectorAll(".pdf-page");
+  if (pages.length === 0 || document.querySelector(".print-slide-frame")) {
+    return;
+  }
+
+  const footer_div = document.querySelector(".footer-default");
+  const logo_div = document.querySelector(".slide-logo");
+
+  pages.forEach(page => {
+    const slide = page.querySelector("section:not(.slide-background)");
+    if (slide === null) {
+      return;
+    }
+    const frame = document.createElement("div");
+    frame.setAttribute("class", "print-slide-frame");
+    if (footer_div !== null && !slide.classList.contains("no-footer") && slide.dataset.footer !== "false") {
+      frame.appendChild(footer_div.cloneNode(true));
+    }
+    if (logo_div !== null && !slide.classList.contains("no-logo")) {
+      frame.appendChild(logo_div.cloneNode(true));
+    }
+    page.appendChild(frame);
+  });
+}
+
+Reveal.on('pdf-ready', addPrintFooterAndLogo);
+Reveal.on('ready', addPrintFooterAndLogo);
+</script>
+
+<script>
 // Remove footer on slide that have a no-footer class
 Reveal.on('ready', () => {
     Reveal.on( 'slidechanged', event => {

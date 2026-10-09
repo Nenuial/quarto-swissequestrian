@@ -233,3 +233,59 @@ Reveal.on('ready', () => {
     }
   });
   </script>
+
+<script>
+// Infographics (infographic.scss): an accent="#hex" attribute on a slide or a
+// box sets its --accent color
+document.querySelectorAll(".reveal .slides [data-accent]").forEach(el => {
+  el.style.setProperty("--accent", el.dataset.accent);
+});
+</script>
+
+<script>
+// Infographics: key numbers (.stat .num) count up from zero each time their
+// slide is shown, keeping their format (1 300, 0.38, −60…). Text that is not a
+// number, and numbers with a no-count class (a year…), stay as they are.
+(function () {
+  const NUMBER = /^([−-]?)(\d{1,3}(?:([   ',])\d{3})+|\d+)(?:\.(\d+))?$/;
+
+  function countUp(el) {
+    if (!el.dataset.final) el.dataset.final = el.textContent.trim();
+    const text = el.dataset.final;
+    const m = text.match(NUMBER);
+    if (!m) return;
+    const sep = m[3] || "";
+    const decimals = m[4] ? m[4].length : 0;
+    const target = parseFloat(m[2].split(sep || "#").join("") + (m[4] ? "." + m[4] : ""));
+    const format = v => {
+      let [int, dec] = v.toFixed(decimals).split(".");
+      if (sep) int = int.replace(/\B(?=(\d{3})+(?!\d))/g, sep);
+      return m[1] + int + (dec ? "." + dec : "");
+    };
+    if (document.hidden || document.documentElement.classList.contains("print-pdf")) {
+      el.textContent = text;
+      return;
+    }
+    const start = performance.now();
+    cancelAnimationFrame(el.countFrame);
+    const frame = now => {
+      const t = Math.min((now - start) / 1100, 1);
+      const eased = 1 - Math.pow(1 - t, 3);
+      el.textContent = t < 1 ? format(target * eased) : text;
+      if (t < 1) el.countFrame = requestAnimationFrame(frame);
+    };
+    el.countFrame = requestAnimationFrame(frame);
+  }
+
+  function enter(slide) {
+    if (slide) slide.querySelectorAll(".stat .num:not(.no-count)").forEach(countUp);
+  }
+
+  function start() {
+    Reveal.on("slidechanged", e => enter(e.currentSlide));
+    enter(Reveal.getCurrentSlide());
+  }
+  if (Reveal.isReady()) start();
+  else Reveal.on("ready", start);
+})();
+</script>

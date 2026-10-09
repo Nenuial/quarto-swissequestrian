@@ -1,0 +1,600 @@
+/*-- scss:defaults --*/
+
+// Infographic layouts: profile slides with key numbers, chapter openers, cards,
+// fun facts, photo captions and quizzes. See docs/classes.md.
+//
+// Colors come from CSS custom properties, so a slide or a single box can change
+// them (`accent="#e5774a"` or `style="--accent: ..."`). Their starting values
+// are derived from the palette below; a palette can set any $info-* variable to
+// override them.
+
+/*-- scss:rules --*/
+
+$_info-dark-bg: lightness($body-bg) < lightness($body-color);
+
+$info-accent: $presentation-heading-color !default;
+$info-muted: rgba($body-color, 0.6) !default;
+$info-panel: rgba($body-color, 0.07) !default;
+$info-overlay: if($_info-dark-bg, rgba(mix(#000, $body-bg, 45%), 0.8), rgba($body-bg, 0.88)) !default;
+$info-overlay-color: $body-color !default;
+$info-ghost: rgba($body-color, 0.07) !default;
+$info-on-accent: if($_info-dark-bg, $body-bg, $body-color) !default;
+
+.reveal {
+  --accent: #{$info-accent};
+  --muted: #{$info-muted};
+  --panel: #{$info-panel};
+  --overlay: #{$info-overlay};
+  --overlay-text: #{$info-overlay-color};
+  --ghost: #{$info-ghost};
+  --on-accent: #{$info-on-accent};
+}
+
+// Images inside infographic boxes take the box width, not Reveal's limits
+.reveal .hero img,
+.reveal .part-img img,
+.reveal .card img {
+  max-width: none;
+  max-height: none;
+  width: 100%;
+  height: auto;
+  margin: 0;
+}
+
+.reveal .hero figure,
+.reveal .hero .quarto-figure,
+.reveal .part-img figure,
+.reveal .part-img .quarto-figure {
+  margin: 0;
+}
+
+// ---------- Profile slide ----------
+
+.reveal .slides section.profile {
+  z-index: 0;
+}
+
+.reveal .slides section.profile h2 {
+  border: none;
+  color: var(--accent);
+  font-size: 80px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin: 0 0 4px 0;
+}
+
+.reveal .profile .kicker {
+  color: var(--muted);
+  font-size: 20px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+.reveal .profile .tagline {
+  color: var(--r-main-color);
+  font-size: 34px;
+  font-style: italic;
+  font-weight: 300;
+  margin: 4px 0 14px 0;
+}
+
+.reveal .profile .hero {
+  position: absolute;
+  top: 30px;
+  right: -170px;
+  width: 640px;
+  z-index: -1;
+}
+
+.reveal .profile .hero.wide {
+  top: 150px;
+  right: -260px;
+  width: 900px;
+}
+
+.reveal .profile .hero.small {
+  top: 90px;
+  right: -60px;
+  width: 520px;
+}
+
+// Photo with a dark background (a galaxy, a nebula): its edges fade out
+.reveal .hero.fade img,
+.reveal .part-img.fade img {
+  -webkit-mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
+  mask-image: radial-gradient(closest-side, #000 60%, transparent 100%);
+}
+
+.reveal .profile .hero img {
+  filter: drop-shadow(0 0 60px color-mix(in srgb, var(--accent) 35%, transparent));
+}
+
+.reveal .slides section.profile.present .hero img {
+  animation: hero-in 1.4s cubic-bezier(.2, .7, .2, 1) both;
+}
+
+// The text blocks only take their own width, so a click next to them reaches
+// the hero behind (e.g. to open it in a lightbox)
+.reveal .profile :is(.kicker, .tagline, .stats:not(.wide)) {
+  width: fit-content;
+}
+
+html.print-pdf .reveal .slides section.profile .hero img {
+  animation: none;
+}
+
+@keyframes hero-in {
+  from { opacity: 0; transform: translateX(90px) scale(.92); }
+  to { opacity: 1; transform: none; }
+}
+
+// ---------- Key numbers ----------
+
+.reveal .stats {
+  display: grid;
+  grid-template-columns: repeat(2, 300px);
+  gap: 10px 16px;
+}
+
+.reveal .stats.three {
+  grid-template-columns: repeat(3, 300px);
+}
+
+.reveal .stats.wide {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.reveal .stats.wide .stat {
+  padding: 14px 20px;
+}
+
+.reveal .stats.wide .num {
+  font-size: 64px;
+}
+
+.reveal .stats.wide .stat p {
+  font-size: 21px;
+}
+
+.reveal .stat {
+  background: var(--panel);
+  border-top: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 6px 14px 8px 14px;
+}
+
+.reveal .stat p {
+  margin: 0;
+  line-height: 1.2;
+  font-size: 17px;
+  color: var(--muted);
+}
+
+.reveal .stat p:first-child {
+  color: var(--r-main-color);
+  white-space: nowrap;
+}
+
+.reveal .stat .num {
+  color: var(--accent);
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.reveal .stat .unit {
+  font-size: 24px;
+  font-weight: 400;
+  margin-left: 4px;
+}
+
+// ---------- Fun fact ----------
+
+.reveal .fact {
+  position: relative;
+  max-width: 618px;
+  margin-top: 12px;
+  padding: 8px 16px 10px 16px;
+  border-left: 6px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  background: var(--overlay);
+  color: var(--overlay-text);
+  font-size: 20px;
+  line-height: 1.35;
+}
+
+.reveal .fact p {
+  margin: 0;
+}
+
+.reveal .fact::before {
+  content: "Did you know?";
+  display: block;
+  color: var(--accent);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.reveal .fact.answer::before { content: "Answer"; }
+:lang(fr) .reveal .fact::before { content: "Le savais-tu ?"; }
+:lang(fr) .reveal .fact.answer::before { content: "Réponse"; }
+:lang(de) .reveal .fact::before { content: "Schon gewusst?"; }
+:lang(de) .reveal .fact.answer::before { content: "Antwort"; }
+.reveal .slides .fact[data-label]::before { content: attr(data-label); }
+
+.reveal .fact strong,
+.reveal .card strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+// ---------- Chapter opener ----------
+
+.reveal .slides section.part {
+  z-index: 0;
+}
+
+.reveal .slides section.part h2 {
+  border: none;
+  font-size: 80px;
+  font-weight: 600;
+  margin-top: 230px;
+  max-width: 760px;
+  line-height: 1.05;
+}
+
+.reveal .slides section.part::after {
+  content: attr(data-part);
+  position: absolute;
+  top: 40px;
+  left: -10px;
+  font-size: 230px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--ghost);
+}
+
+.reveal .part .question {
+  max-width: 700px;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 300;
+  color: var(--muted);
+}
+
+.reveal .part .question::before {
+  content: "Question: ";
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+:lang(fr) .reveal .part .question::before { content: "Question : "; }
+:lang(de) .reveal .part .question::before { content: "Frage: "; }
+.reveal .slides .part .question[data-label]::before { content: attr(data-label) " "; }
+
+.reveal .part .part-img {
+  position: absolute;
+  right: -40px;
+  top: 60px;
+  width: 520px;
+  z-index: -1;
+}
+
+// ---------- Cards ----------
+
+.reveal .cards {
+  display: grid;
+  grid-template-columns: repeat(var(--n, 3), 1fr);
+  gap: 18px;
+  margin-top: 10px;
+}
+
+.reveal .card {
+  background: var(--panel);
+  border-top: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 12px 18px;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.reveal .card .ttl,
+.reveal .card h3 {
+  display: block;
+  font-weight: 600;
+  color: var(--accent);
+  font-size: 30px;
+  margin: 0 0 6px 0;
+  text-transform: none;
+}
+
+.reveal .card p {
+  margin: 0 0 8px 0;
+}
+
+.reveal .card ul {
+  margin: 0 0 0 1.1em;
+  font-size: 22px;
+}
+
+.reveal .card .big {
+  display: block;
+  color: var(--accent);
+  font-size: 44px;
+  font-weight: 600;
+  line-height: 1.1;
+}
+
+// ---------- Takeaway ----------
+
+.reveal .takeaway {
+  margin-top: 18px;
+  padding: 8px 18px;
+  border-radius: 6px;
+  background: var(--panel);
+  font-size: 24px;
+}
+
+.reveal .takeaway p {
+  margin: 0;
+}
+
+.reveal .takeaway p:first-child::before {
+  content: "➜ ";
+  color: var(--accent);
+}
+
+// ---------- Composition bar ----------
+
+.reveal .bar {
+  display: flex;
+  height: 40px;
+  width: 618px;
+  margin-top: 16px;
+  border-radius: 6px;
+  overflow: hidden;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--on-accent);
+}
+
+// Written in markdown, the spans sit in a paragraph: let them join the flex row
+.reveal .bar > p {
+  display: contents;
+}
+
+.reveal .bar span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+// ---------- Photo caption ----------
+
+.reveal .caption {
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  max-width: 600px;
+  padding: 12px 20px;
+  border-left: 6px solid var(--accent);
+  border-radius: 0 8px 8px 0;
+  background: var(--overlay);
+  backdrop-filter: blur(6px);
+  color: var(--overlay-text);
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.reveal .caption .ttl {
+  display: block;
+  font-weight: 600;
+}
+
+.reveal .caption .ttl,
+.reveal .caption h3 {
+  color: var(--accent);
+  font-size: 34px;
+  margin: 0 0 4px 0;
+  text-transform: none;
+}
+
+.reveal .caption p {
+  margin: 0;
+  color: var(--overlay-text);
+}
+
+.reveal .caption strong {
+  color: var(--overlay-text);
+  font-weight: 600;
+}
+
+.reveal .caption.small {
+  font-size: 18px;
+  padding: 6px 14px;
+}
+
+// ---------- Quiz ----------
+
+.reveal .clues {
+  font-size: 30px;
+}
+
+.reveal .clues li {
+  margin-bottom: 10px;
+}
+
+.reveal .reveal-answer {
+  position: absolute;
+  right: 40px;
+  top: 120px;
+  width: 400px;
+  text-align: center;
+  font-size: 44px;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.reveal .reveal-answer img {
+  max-width: none;
+  max-height: none;
+  width: 340px;
+  margin: 0 auto 8px auto;
+}
+
+// ---------- Interactive canvas ----------
+// The deck's own script fills the .sim box with a canvas and a .sim-controls bar.
+
+.reveal .sim {
+  position: absolute;
+  left: 0;
+  top: 100px;
+  width: 1280px;
+  height: 610px;
+}
+
+.reveal .sim canvas {
+  display: block;
+  width: 1280px;
+  height: 610px;
+}
+
+.reveal .sim-controls {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  max-width: 560px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--overlay);
+  font-size: 17px;
+  color: var(--overlay-text);
+}
+
+.reveal .sim-controls button {
+  font: inherit;
+  font-size: 16px;
+  min-width: 44px;
+  padding: 3px 12px;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--overlay-text);
+  cursor: pointer;
+}
+
+.reveal .sim-controls button:hover {
+  background: var(--panel);
+}
+
+.reveal .sim-controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.reveal .sim-controls input[type=range] {
+  width: 200px;
+  accent-color: var(--accent);
+}
+
+.reveal .sim-controls input[type=checkbox] {
+  accent-color: var(--accent);
+}
+
+.reveal .sim-controls .rate {
+  min-width: 140px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.reveal .sim-controls .date {
+  flex-basis: 100%;
+  color: var(--muted);
+}
+
+.reveal .sim-controls .date b {
+  color: var(--accent);
+}
+
+// ---------- Line charts ----------
+// An inline <svg class="chart" viewBox="…"> (or one built by a deck script):
+// axes, grid, labels, curves and areas. A curve with class="curve draw" and
+// pathLength="1" draws itself when its fragment appears.
+
+.reveal svg.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.reveal .chart .ax {
+  stroke: var(--muted);
+  stroke-width: 2;
+  fill: none;
+}
+
+.reveal .chart .grid {
+  stroke: rgba($body-color, 0.12);
+  stroke-width: 1;
+}
+
+.reveal .chart text {
+  fill: var(--muted);
+  font-size: 16px;
+}
+
+.reveal .chart text.lbl {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.reveal .chart text.big {
+  font-size: 22px;
+  font-weight: 600;
+  fill: $body-color;
+}
+
+.reveal .chart .curve {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.reveal .chart .curve.dashed {
+  stroke-dasharray: 10 8;
+}
+
+.reveal .chart .area {
+  stroke: none;
+}
+
+.reveal .chart .fragment .curve.draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 2.2s ease-out;
+}
+
+.reveal .chart .fragment.visible .curve.draw,
+html.print-pdf .reveal .chart .curve.draw {
+  stroke-dashoffset: 0;
+}

@@ -622,7 +622,8 @@ html.print-pdf .reveal .slides section.profile .hero img {
 // ---------- Line charts ----------
 // An inline <svg class="chart" viewBox="…"> (or one built by a deck script):
 // axes, grid, labels, curves and areas. A curve with class="curve draw" and
-// pathLength="1" draws itself when its fragment appears.
+// pathLength="1" draws itself when its fragment appears; a "curve dashed draw"
+// (without pathLength) is wiped in from the left.
 
 .reveal svg.chart {
   display: block;
@@ -682,4 +683,18 @@ html.print-pdf .reveal .slides section.profile .hero img {
 .reveal .chart .fragment.visible .curve.draw,
 html.print-pdf .reveal .chart .curve.draw {
   stroke-dashoffset: 0;
+}
+
+// A dashed curve cannot draw itself with the dash trick (it would lose its dashes):
+// it is wiped in from the left instead. Give it no pathLength, which would stretch the dashes.
+.reveal .chart .fragment .curve.dashed.draw {
+  stroke-dasharray: 10 8;
+  stroke-dashoffset: 0;
+  clip-path: inset(-10px 100% -10px -10px);
+  transition: clip-path 2.2s ease-out;
+}
+
+.reveal .chart .fragment.visible .curve.dashed.draw,
+html.print-pdf .reveal .chart .curve.dashed.draw {
+  clip-path: inset(-10px -10px -10px -10px);
 }

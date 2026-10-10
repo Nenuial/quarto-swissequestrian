@@ -52,6 +52,15 @@ $box-bg: rgba($body-bg, 0.6) !default;
   margin-bottom: 20px;
 }
 
+// Page count of a reference list split over several slides (theme.html)
+.slide h2 .refs-page {
+  margin-left: 0.3em;
+  font-size: 0.6em;
+  font-weight: 400;
+  opacity: 0.6;
+  text-transform: none;
+}
+
 .slide.has-light-background h2,
 .slide.has-light-background h3 {
   color: darken($presentation-heading-color, 20%);

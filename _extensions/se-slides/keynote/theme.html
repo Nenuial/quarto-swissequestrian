@@ -116,6 +116,156 @@ Reveal.on('slidechanged', event => {
 </script>
 
 <script>
+// References: a list taller than the slide is split over several slides with the same title and
+// a page count ("References 1/2"), instead of one scrolling slide. Reveal is usually set up when this
+// runs: it is synced, and the slide menu gets the new pages. Split again when the web fonts are
+// loaded, if the lines wrap differently.
+(function () {
+  const refs = document.querySelector(".reveal .slides section #refs");
+  if (refs === null) {
+    return;
+  }
+  const slide = refs.closest("section");
+  const entries = Array.from(refs.querySelectorAll(":scope > .csl-entry"));
+  if (entries.length < 2) {
+    return;
+  }
+  const config = Reveal.getConfig ? Reveal.getConfig() : {};
+  const width = config.width || 1280, height = config.height || 720;
+  let pages = [slide];
+
+  function split() {
+    // back to one slide
+    pages.slice(1).forEach(page => page.remove());
+    pages = [slide];
+    entries.forEach(entry => refs.appendChild(entry));
+    slide.querySelectorAll(".refs-page").forEach(span => span.remove());
+    // measure the entries on the slide shown at its size, hidden
+    const saved = slide.getAttribute("style");
+    slide.style.cssText += `;display:block;visibility:hidden;width:${width}px;height:${height}px;overflow:visible`;
+    const box = slide.getBoundingClientRect(), scale = box.height / height || 1;
+    const top = e => (e.getBoundingClientRect().top - box.top) / scale;
+    const bottom = e => (e.getBoundingClientRect().bottom - box.top) / scale;
+    const start = top(entries[0]), limit = height - 16, groups = [[]];
+    let offset = 0;
+    entries.forEach(entry => {
+      if (groups[groups.length - 1].length && bottom(entry) - offset > limit) {
+        groups.push([]);
+        offset = top(entry) - start;
+      }
+      groups[groups.length - 1].push(entry);
+    });
+    if (saved === null) slide.removeAttribute("style"); else slide.setAttribute("style", saved);
+    if (groups.length === 1) {
+      return;
+    }
+    // one slide per group
+    slide.classList.remove("scrollable");
+    groups.forEach((group, i) => {
+      let page = slide;
+      if (i > 0) {
+        page = slide.cloneNode(true);
+        page.id = `${slide.id}-${i + 1}`;
+        page.classList.remove("present", "past", "future");
+        page.removeAttribute("style");
+        page.removeAttribute("hidden");
+        page.removeAttribute("aria-hidden");
+        page.querySelectorAll("aside.notes").forEach(notes => notes.remove());
+        page.querySelector("#refs").removeAttribute("id");
+        page.querySelectorAll(".csl-entry").forEach(entry => entry.remove());
+        pages[pages.length - 1].after(page);
+        pages.push(page);
+      }
+      const list = i === 0 ? refs : page.querySelector(".csl-bib-body");
+      group.forEach(entry => list.appendChild(entry));
+    });
+    pages.forEach((page, i) => {
+      const title = page.querySelector("h1, h2");
+      if (title !== null) {
+        title.insertAdjacentHTML("beforeend", ` <span class="refs-page">${i + 1}/${pages.length}</span>`);
+      }
+    });
+  }
+
+  // The slide menu lists the slides once: add the pages after the first one, and shift the
+  // slides that follow them
+  function updateMenu() {
+    const items = Array.from(document.querySelectorAll(".slide-menu-wrapper li.slide-menu-item[data-slide-h]"));
+    if (items.length === 0) {
+      return;
+    }
+    items.filter(item => item.classList.contains("refs-menu-page")).forEach(item => item.remove());
+    const first = Reveal.getIndices(slide).h, extra = pages.length - 1;
+    let page1 = null;
+    items.filter(item => !item.classList.contains("refs-menu-page")).forEach(item => {
+      if (item.dataset.refsH === undefined) {
+        item.dataset.refsH = item.dataset.slideH;
+        item.dataset.refsItem = item.dataset.item;
+      }
+      const h = +item.dataset.refsH, shift = h > first ? extra : 0;
+      item.dataset.slideH = h + shift;
+      item.dataset.item = +item.dataset.refsItem + shift;
+      if (h === first) {
+        page1 = item;
+      }
+    });
+    if (page1 === null) {
+      return;
+    }
+    const label = i => `${(page1.dataset.refsTitle = page1.dataset.refsTitle || page1.textContent.trim())} ${i}/${pages.length}`;
+    const title = item => item.querySelector(".slide-menu-item-title") || item;
+    title(page1).textContent = pages.length > 1 ? label(1) : page1.dataset.refsTitle || title(page1).textContent;
+    let last = page1;
+    for (let i = 1; i < pages.length; i++) {
+      const item = page1.cloneNode(true);
+      item.classList.add("refs-menu-page");
+      item.classList.remove("active", "past", "future");
+      item.dataset.slideH = first + i;
+      item.dataset.item = +page1.dataset.item + i;
+      title(item).textContent = label(i + 1);
+      item.addEventListener("click", () => Reveal.slide(+item.dataset.slideH));
+      last.after(item);
+      last = item;
+    }
+  }
+
+  // Reveal set up already: take the new slides, stay on the slide shown or go to a page of the
+  // list named in the address (#/references-2; on loading, Reveal has already replaced an address
+  // it did not know, so take the one the page was opened with)
+  function refresh(hash) {
+    if (!Reveal.isReady()) {
+      return;
+    }
+    const at = Reveal.getIndices();
+    Reveal.sync();
+    const named = pages.find(page => hash === `#/${page.id}`);
+    if (named) {
+      Reveal.slide(Reveal.getIndices(named).h);
+    } else {
+      Reveal.slide(at.h, at.v, at.f);
+    }
+    updateMenu();
+  }
+
+  const count = () => pages.map(page => page.querySelectorAll(".csl-entry").length).join();
+  split();
+  if (pages.length > 1) {
+    const opened = performance.getEntriesByType ? performance.getEntriesByType("navigation")[0] : null;
+    refresh(opened ? new URL(opened.name).hash : location.hash);
+  }
+  if (document.fonts && document.fonts.status !== "loaded") {
+    const before = count();
+    document.fonts.ready.then(() => {
+      split();
+      if (count() !== before) {
+        refresh(location.hash);
+      }
+    });
+  }
+})();
+</script>
+
+<script>
 // Clean up slide background styles
 divs = document.querySelectorAll('.slide-background-content');
 Array.from(divs).map(function (x) {

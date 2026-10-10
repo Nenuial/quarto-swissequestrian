@@ -1,4 +1,24 @@
 <script>
+// Cover title slide (infographic.scss): the picture and the colours given in title-slide-attributes
+// (data-cover, data-cover-accent, data-cover-blend). The picture's URL is made absolute here, so
+// that it is relative to the deck and not to the theme's stylesheet.
+(function () {
+  const slide = document.getElementById("title-slide");
+  if (slide === null || !slide.dataset.cover) {
+    return;
+  }
+  slide.classList.add("cover");
+  slide.style.setProperty("--cover-img", `url("${new URL(slide.dataset.cover, document.baseURI).href}")`);
+  if (slide.dataset.coverAccent) {
+    slide.style.setProperty("--cover-accent", slide.dataset.coverAccent);
+  }
+  if (slide.dataset.coverBlend) {
+    slide.style.setProperty("--cover-blend", slide.dataset.coverBlend);
+  }
+})();
+</script>
+
+<script>
 // Copy over background colors to new div
 divs = document.querySelectorAll('[data-background-color]');
 

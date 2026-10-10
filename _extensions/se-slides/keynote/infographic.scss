@@ -290,6 +290,91 @@ html.print-pdf .reveal .slides section.profile .hero img {
   z-index: -1;
 }
 
+// ---------- Cover title slide ----------
+// Opt in from the front matter (theme.html adds the class .cover and the custom properties):
+//   title-slide-attributes:
+//     data-cover: images/head.png      picture on the right of the letterbox (2:3 portrait)
+//     data-cover-accent: "#ffb15c"     colour of the title and its bar (default: --accent)
+//     data-cover-blend: lighten        optional: the dark areas of the picture take the slide colour
+
+// Reveal centres the slide by its height, which the picture exceeds: the block is placed instead
+.reveal .slides section#title-slide.cover {
+  top: 0 !important;
+  z-index: 0;
+}
+
+// the picture fills the right of the letterbox and fades into the slide on its left
+.reveal .slides section#title-slide.cover::after {
+  content: "";
+  position: absolute;
+  top: -$border-updown-width;
+  right: -$border-leftright-width;
+  width: 600px;
+  height: calc(var(--slide-height) + #{$border-updown-width} * 2);
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--cover-img);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: var(--r-background-color);
+  background-blend-mode: var(--cover-blend, normal);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 45%);
+  mask-image: linear-gradient(to right, transparent 0, #000 45%);
+}
+
+.reveal #title-slide.cover .title {
+  position: relative;
+  max-width: 720px;
+  margin: 200px 0 22px !important;   // global.scss sets .title { margin: -0.5em … !important }
+  border: none;
+  font-size: 104px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cover-accent, var(--accent));
+  text-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+}
+
+// a short accent bar under the title
+.reveal #title-slide.cover .title::after {
+  content: "";
+  display: block;
+  width: 96px;
+  height: 5px;
+  margin-top: 28px;
+  border-radius: 3px;
+  background: var(--cover-accent, var(--accent));
+}
+
+.reveal #title-slide.cover .subtitle {
+  margin: 0 0 120px;
+  font-size: 26px;
+  font-style: normal;
+  font-variant: normal;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.reveal #title-slide.cover .quarto-title-authors,
+.reveal #title-slide.cover .date {
+  display: block;
+  float: none;
+  margin: 0;
+  font-size: 18px;
+  color: var(--muted);
+}
+
+.reveal #title-slide.cover .quarto-title-author-name {
+  color: var(--muted);
+}
+
+.reveal #title-slide.cover .quarto-title-affiliation {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+}
+
 // ---------- Cards ----------
 
 .reveal .cards {

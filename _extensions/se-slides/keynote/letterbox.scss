@@ -42,6 +42,22 @@ html.print-pdf .quarto-dark {
   border-width: 0;
 }
 
+// Content that overflows the letterbox (the Sun at the slide edge, a part image)
+// is cut at its outer edge instead of showing over the page. The element keeps
+// its full size: only its painting is clipped. Not in the overview, the scroll
+// view or print, where the slides are laid out differently.
+html:not(.print-pdf) .reveal:not(.overview) .slides:not(:has(.scroll-page)) {
+  overflow: clip;
+  overflow-clip-margin: border-box;
+
+  // Without overflow-clip-margin (older Safari), overflow: clip would cut at the
+  // inside of the frame; clip-path cuts at its outside, but also hides the shadow.
+  @supports not (overflow-clip-margin: border-box) {
+    overflow: visible;
+    clip-path: border-box;
+  }
+}
+
 .scroll-page {
   background-color: $body-bg !important;
 }

@@ -388,21 +388,33 @@ Reveal.on('ready', () => {
 </script>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function () {
-    if (window.self != window.top) {
-        // Execute JavaScript specific to iframe embedding
-        Reveal.on('ready', () => {
-          Reveal.configure({
-            scrollActivationWidth: null,
-          });
-        });
-  
-        // Remove footer and logo in iframe embedding
-        document.querySelector("div .slide-logo").style.visibility = "hidden";
-        document.querySelector("div .footer").style.visibility = "hidden";
-    }
+// Inside an iframe (the vignettes of the GeoDoc site): always the scroll view, whatever the width of
+// the frame (Reveal otherwise switches to it only below 435px, so a vignette came out one way or the
+// other), the slides one after the other at the full width of the frame, without footer, logo or
+// scrollbar (html.embedded in global.scss)
+if (window.self !== window.top) {
+  document.documentElement.classList.add("embedded");
+  // Reveal scales a slide to fit the width and the height of the frame: in a low frame, minScale
+  // makes it take the full width instead. Each slide is drawn a little smaller in its page
+  // (global.scss), as there is no letterbox frame around it.
+  const embed = () => Reveal.configure({
+    scrollActivationWidth: 1e6,
+    scrollLayout: "compact",
+    scrollSnap: false,
+    scrollProgress: false,
+    margin: 0,
+    minScale: document.documentElement.clientWidth / Reveal.getConfig().width
   });
-  </script>
+  // the frame first shows the middle of the title slide, where the title is
+  const centre = () => requestAnimationFrame(() => requestAnimationFrame(() => {
+    const view = document.querySelector(".reveal-viewport");
+    if (view) view.scrollTop = Math.max(0, (Reveal.getConfig().height * Reveal.getScale() - view.clientHeight) / 2);
+  }));
+  const start = () => { embed(); centre(); };
+  if (Reveal.isReady()) start(); else Reveal.on("ready", start);
+  window.addEventListener("resize", () => { if (Reveal.isReady()) embed(); });
+}
+</script>
 
 <script>
 // Infographics (infographic.scss): an accent="#hex" attribute on a slide or a

@@ -108,6 +108,28 @@ $box-bg: rgba($body-bg, 0.6) !default;
   z-index: 1000 !important;
 }
 
+// Inside an iframe (theme.html adds html.embedded and switches to the scroll view): a vignette
+// without footer, logo or scrollbar
+html.embedded .reveal .footer,
+html.embedded .reveal .slide-logo,
+html.embedded .scrollbar {
+  display: none !important;
+}
+
+html.embedded .reveal-scroll {
+  scrollbar-width: none;
+}
+
+html.embedded .reveal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+// each slide a little smaller than its page, which keeps the full width of the frame: a margin all
+// round instead of the letterbox frame, and the next slide does not show under a 16:9 frame
+html.embedded .reveal-scroll .scroll-page section {
+  transform: scale(calc(var(--slide-scale) * 0.95)) translate(-50%, -50%) !important;
+}
+
 .underline {
   border-bottom: 2px solid;
 }

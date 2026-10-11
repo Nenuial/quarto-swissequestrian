@@ -81,14 +81,17 @@ $box-bg: rgba($body-bg, 0.6) !default;
   margin-left: 0em !important;
 }
 
+// Footer, logo and title badges in the bottom band of the letterbox (40px): the logo and badges
+// from the edge of the slide down to 8px above the outer edge, the footer centred on the same line
 .reveal .footer {
-  bottom: -30px !important;
+  bottom: -28px !important;
   z-index: 1000 !important;
   color: $presentation-heading-color;
 }
 
 .reveal .slide-logo {
-  bottom: -35px !important;
+  bottom: -32px !important;
+  margin-bottom: 0 !important;   // Reveal gives it a 12px margin
   right: 0px !important;
   max-height: 2rem !important;
   z-index: 1000 !important;
@@ -99,7 +102,8 @@ $box-bg: rgba($body-bg, 0.6) !default;
 .reveal .title-badges {
   position: absolute;
   left: 0;
-  bottom: -35px;
+  bottom: -32px;   // as the logo
+  pointer-events: auto;   // Reveal turns them off on .slides, where theme.html puts the badges
   display: flex;
   gap: 8px;
   align-items: center;

@@ -297,10 +297,14 @@ html.print-pdf .reveal .slides section.profile .hero img {
 //     data-cover-accent: "#ffb15c"     colour of the title and its bar (default: --accent)
 //     data-cover-blend: lighten        optional: the dark areas of the picture take the slide colour
 
-// Reveal centres the slide by its height, which the picture exceeds: the block is placed instead
+// Reveal centres the slide by its height, which the picture exceeds: the block is placed instead.
+// Not in the scroll view (small screens), where Reveal centres every slide in its page itself.
 .reveal .slides section#title-slide.cover {
-  top: 0 !important;
   z-index: 0;
+}
+
+.reveal .slides:not(:has(.scroll-page)) section#title-slide.cover {
+  top: 0 !important;
 }
 
 // the picture fills the right of the letterbox and fades into the slide on its left
@@ -321,6 +325,13 @@ html.print-pdf .reveal .slides section.profile .hero img {
   background-blend-mode: var(--cover-blend, normal);
   -webkit-mask-image: linear-gradient(to right, transparent 0, #000 45%);
   mask-image: linear-gradient(to right, transparent 0, #000 45%);
+}
+
+// the scroll view has no letterbox: the picture stays inside the slide
+.reveal .slides:has(.scroll-page) section#title-slide.cover::after {
+  top: 0;
+  right: 0;
+  height: var(--slide-height);
 }
 
 .reveal #title-slide.cover .title {

@@ -330,7 +330,7 @@ Reveal.on('ready', () => {
 <script>
 // Print view: the footer and logo are single fixed elements, so copy them into
 // a frame over the slide on every page, except on slides with a no-footer or
-// no-logo class; the licence and AI badges on the title page
+// no-logo class and on chapter openers (.part); the licence and AI badges on the title page
 function addPrintFooterAndLogo() {
   const pages = document.querySelectorAll(".pdf-page");
   if (pages.length === 0 || document.querySelector(".print-slide-frame")) {
@@ -347,10 +347,10 @@ function addPrintFooterAndLogo() {
     }
     const frame = document.createElement("div");
     frame.setAttribute("class", "print-slide-frame");
-    if (footer_div !== null && !slide.classList.contains("no-footer") && slide.dataset.footer !== "false") {
+    if (footer_div !== null && !hidesFooter(slide) && slide.dataset.footer !== "false") {
       frame.appendChild(footer_div.cloneNode(true));
     }
-    if (logo_div !== null && !slide.classList.contains("no-logo")) {
+    if (logo_div !== null && !hidesLogo(slide)) {
       frame.appendChild(logo_div.cloneNode(true));
     }
     const badges = document.querySelector(".title-badges");
@@ -368,29 +368,20 @@ Reveal.on('ready', addPrintFooterAndLogo);
 </script>
 
 <script>
-// Remove footer on slide that have a no-footer class
+// Hide the footer on slides with a no-footer class, the logo on slides with a no-logo class,
+// and both on chapter openers (.part)
+const hidesFooter = slide => slide.classList.contains("no-footer") || slide.classList.contains("part");
+const hidesLogo = slide => slide.classList.contains("no-logo") || slide.classList.contains("part");
 Reveal.on('ready', () => {
-    Reveal.on( 'slidechanged', event => {
-        if (Array.from(event.currentSlide.classList).indexOf("no-footer") !== -1) {
-            document.querySelector("div .footer").style.visibility = "hidden";
-        } else {
-            document.querySelector("div .footer").style.visibility = null;
-        }
-    });
-})
-</script>
-
-<script>
-// Remove logo on slide that have a no-logo class
-Reveal.on('ready', () => {
-    Reveal.on( 'slidechanged', event => {
-        if (Array.from(event.currentSlide.classList).indexOf("no-logo") !== -1) {
-            document.querySelector("div .slide-logo").style.visibility = "hidden";
-        } else {
-            document.querySelector("div .slide-logo").style.visibility = null;
-        }
-    });
-})
+  const footer = document.querySelector("div .footer"), logo = document.querySelector("div .slide-logo");
+  const update = slide => {
+    if (!slide) return;
+    if (footer) footer.style.visibility = hidesFooter(slide) ? "hidden" : null;
+    if (logo) logo.style.visibility = hidesLogo(slide) ? "hidden" : null;
+  };
+  update(Reveal.getCurrentSlide());
+  Reveal.on('slidechanged', event => update(event.currentSlide));
+});
 </script>
 
 <script>

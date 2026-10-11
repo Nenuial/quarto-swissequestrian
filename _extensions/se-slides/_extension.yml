@@ -12,6 +12,7 @@ contributes:
         - "logo.html"
       filters:
         - keynote/custom-callouts.lua
+        - keynote/badges.lua
       width: 1280
       height: 720
       logo: ../se-resources/images/logo-se-dark.svg

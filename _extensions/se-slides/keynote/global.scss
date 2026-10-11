@@ -95,6 +95,39 @@ $box-bg: rgba($body-bg, 0.6) !default;
 }
 
 
+// Licence and AI badges (badges.lua, theme.html): on the title slide, opposite the logo
+.reveal .title-badges {
+  position: absolute;
+  left: 0;
+  bottom: -35px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 1000;
+}
+
+.reveal .title-badges[hidden] {
+  display: none;
+}
+
+.reveal .title-badges a {
+  display: block;
+  line-height: 0;
+}
+
+.reveal .title-badges img {
+  display: block;
+  height: 2rem;
+  width: auto;
+  max-width: none;
+  margin: 0;
+}
+
+.scroll-page ~ .title-badges {
+  bottom: 10px;
+  left: 20px;
+}
+
 .scroll-page ~ .footer {
   bottom: 25px !important;
   z-index: 1000 !important;
@@ -112,6 +145,7 @@ $box-bg: rgba($body-bg, 0.6) !default;
 // without footer, logo or scrollbar
 html.embedded .reveal .footer,
 html.embedded .reveal .slide-logo,
+html.embedded .reveal .title-badges,
 html.embedded .scrollbar {
   display: none !important;
 }
@@ -183,6 +217,10 @@ html.print-pdf .reveal .print-slide-frame > .footer,
 html.print-pdf .reveal .print-slide-frame > .slide-logo {
   position: absolute !important;
   display: block !important;
+}
+
+html.print-pdf .reveal .slides > .title-badges {
+  display: none;
 }
 
 #title-slide {

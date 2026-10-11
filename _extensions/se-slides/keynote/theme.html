@@ -330,7 +330,7 @@ Reveal.on('ready', () => {
 <script>
 // Print view: the footer and logo are single fixed elements, so copy them into
 // a frame over the slide on every page, except on slides with a no-footer or
-// no-logo class
+// no-logo class; the licence and AI badges on the title page
 function addPrintFooterAndLogo() {
   const pages = document.querySelectorAll(".pdf-page");
   if (pages.length === 0 || document.querySelector(".print-slide-frame")) {
@@ -352,6 +352,12 @@ function addPrintFooterAndLogo() {
     }
     if (logo_div !== null && !slide.classList.contains("no-logo")) {
       frame.appendChild(logo_div.cloneNode(true));
+    }
+    const badges = document.querySelector(".title-badges");
+    if (badges !== null && slide.id === "title-slide") {
+      const copy = badges.cloneNode(true);
+      copy.hidden = false;
+      frame.appendChild(copy);
     }
     page.appendChild(frame);
   });
@@ -385,6 +391,23 @@ Reveal.on('ready', () => {
         }
     });
 })
+</script>
+
+<script>
+// Licence and AI badges (badges.lua, after the slides): next to the logo, on the opposite side,
+// shown on the title slide only (hidden inside an iframe by global.scss)
+(function () {
+  const setUp = () => {
+    const badges = document.querySelector(".title-badges"), slides = document.querySelector(".reveal .slides");
+    if (!badges || !slides) return;
+    slides.appendChild(badges);
+    const show = () => { badges.hidden = !(Reveal.getCurrentSlide() && Reveal.getCurrentSlide().id === "title-slide"); };
+    show();
+    Reveal.on("slidechanged", show);
+  };
+  const ready = () => { if (Reveal.isReady()) setUp(); else Reveal.on("ready", setUp); };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", ready); else ready();
+})();
 </script>
 
 <script>

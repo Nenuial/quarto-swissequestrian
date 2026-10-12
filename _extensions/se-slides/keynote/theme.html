@@ -294,7 +294,9 @@ Array.from(divs).map(function (x) {
 </script>
 
 <script>
-Reveal.on('ready', () => {
+// Reveal may already be ready when these scripts run (fast decks): then run at once
+const keynoteOnReady = fn => { if (Reveal.isReady()) fn(); else Reveal.on('ready', fn); };
+keynoteOnReady(() => {
     // Move menu button
     menu_div = document.querySelector(".slide-menu-button");
     if (menu_div !== null) {
@@ -364,7 +366,7 @@ function addPrintFooterAndLogo() {
 }
 
 Reveal.on('pdf-ready', addPrintFooterAndLogo);
-Reveal.on('ready', addPrintFooterAndLogo);
+keynoteOnReady(addPrintFooterAndLogo);
 </script>
 
 <script>
@@ -372,7 +374,7 @@ Reveal.on('ready', addPrintFooterAndLogo);
 // and both on chapter openers (.part)
 const hidesFooter = slide => slide.classList.contains("no-footer") || slide.classList.contains("part");
 const hidesLogo = slide => slide.classList.contains("no-logo") || slide.classList.contains("part");
-Reveal.on('ready', () => {
+keynoteOnReady(() => {
   const footer = document.querySelector("div .footer"), logo = document.querySelector("div .slide-logo");
   const update = slide => {
     if (!slide) return;

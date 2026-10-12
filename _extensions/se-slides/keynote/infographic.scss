@@ -290,6 +290,44 @@ html.print-pdf .reveal .slides section.profile .hero img {
   z-index: -1;
 }
 
+// .part-img.bleed: the picture fills the right of the letterbox and fades into the slide, as on
+// the cover title slide. Cropped to fill (object-fit); --img-pos moves the crop (default: center).
+.reveal .part .part-img.bleed {
+  top: -$border-updown-width;
+  right: -$border-leftright-width;
+  width: 600px;
+  height: calc(var(--slide-height) + #{$border-updown-width} * 2);
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 45%);
+  mask-image: linear-gradient(to right, transparent 0, #000 45%);
+}
+
+.reveal .part .part-img.bleed :is(p, figure, .quarto-figure, a) {
+  height: 100%;
+  margin: 0;
+}
+
+.reveal .part .part-img.bleed img {
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--img-pos, center);
+}
+
+.reveal .slides:has(.scroll-page) .part .part-img.bleed {
+  top: 0;
+  right: 0;
+  height: var(--slide-height);
+}
+
+// the credit of the attribution plugin runs along the right edge, over the picture: give it a backdrop
+.reveal .slides section.part:has(.part-img.bleed) .attribution p {
+  display: inline-block;
+  margin: 0;
+  padding: 8px 4px;
+  border-radius: 4px;
+  background: var(--overlay);
+  color: var(--overlay-text);
+}
+
 // ---------- Cover title slide ----------
 // Opt in from the front matter (theme.html adds the class .cover and the custom properties):
 //   title-slide-attributes:
@@ -526,6 +564,8 @@ html.print-pdf .reveal .slides section.profile .hero img {
 
 .reveal .clues {
   font-size: 30px;
+  // keep clear of the answer box in the top right (400px wide, 40px from the edge)
+  max-width: calc(100% - 460px);
 }
 
 .reveal .clues li {

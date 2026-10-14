@@ -188,7 +188,10 @@ $image-side-width: calc(#{$slide-height} * 2 / 3);
   box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.6);
 }
 
-.no-caption figcaption {
+// .no-caption on a figure, or on the image itself (where Quarto puts the class of ![](…){.no-caption}): the
+// caption stays in the lightbox only
+.no-caption figcaption,
+figure:has(img.no-caption) figcaption {
   display: none;
 }
 

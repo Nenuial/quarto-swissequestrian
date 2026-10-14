@@ -407,8 +407,9 @@ keynoteOnReady(() => {
 // Inside an iframe (the vignettes of the GeoDoc site): always the scroll view, whatever the width of
 // the frame (Reveal otherwise switches to it only below 435px, so a vignette came out one way or the
 // other), the slides one after the other at the full width of the frame, without footer, logo or
-// scrollbar (html.embedded in global.scss)
-if (window.self !== window.top) {
+// scrollbar (html.embedded in global.scss). Not in the speaker view, whose previews of the current and
+// next slides are iframes too, loaded with ?receiver
+if (window.self !== window.top && !/receiver/i.test(window.location.search)) {
   document.documentElement.classList.add("embedded");
   // Reveal scales a slide to fit the width and the height of the frame: in a low frame, minScale
   // makes it take the full width instead. Each slide is drawn a little smaller in its page
@@ -429,6 +430,10 @@ if (window.self !== window.top) {
   const start = () => { embed(); centre(); };
   if (Reveal.isReady()) start(); else Reveal.on("ready", start);
   window.addEventListener("resize", () => { if (Reveal.isReady()) embed(); });
+} else if (/receiver/i.test(window.location.search)) {
+  // the speaker view's previews: always slides, even when the frame is narrower than 435px
+  const slides = () => Reveal.configure({ scrollActivationWidth: 0 });   // 0, not null: Reveal then leaves the scroll view
+  if (Reveal.isReady()) slides(); else Reveal.on("ready", slides);
 }
 </script>
 

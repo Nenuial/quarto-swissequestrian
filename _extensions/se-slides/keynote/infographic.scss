@@ -318,6 +318,18 @@ html.print-pdf .reveal .slides section.profile .hero img {
   height: var(--slide-height);
 }
 
+// The credit of the attribution plugin is turned to read from bottom to top (a box the size of the slide,
+// writing-mode, then rotate(180deg)). With vertical-lr, its second line lands on the left of the first, above
+// it for the reader: vertical-rl puts it on the right, below it, as in any text. vertical-rl starts the text
+// on the other side of the box, so it is pushed to the far side (flex-end), which the rotation brings back to
+// the right edge of the slide.
+.reveal .attribution {
+  writing-mode: vertical-rl;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
 // the credit of the attribution plugin runs along the right edge, over the picture: give it a backdrop
 .reveal .slides section.part:has(.part-img.bleed) .attribution p {
   display: inline-block;

@@ -492,3 +492,27 @@ document.querySelectorAll(".reveal .slides [data-accent]").forEach(el => {
   else Reveal.on("ready", start);
 })();
 </script>
+<script>
+// Teacher slides (class .teacher, e.g. the corrections of exercises): taken out of the deck for students.
+// ?teacher in the address keeps them, and this browser remembers it (so the speaker view, another window,
+// shows the same slides); ?teacher=off forgets it. They stay in the page source: hidden, not secret.
+(function () {
+  const KEY = "keynote-teacher", q = new URLSearchParams(location.search);
+  let on = false;
+  try {
+    if (q.has("teacher")) q.get("teacher") === "off" ? localStorage.removeItem(KEY) : localStorage.setItem(KEY, "1");
+    on = localStorage.getItem(KEY) === "1";
+  } catch (e) {
+    on = q.has("teacher") && q.get("teacher") !== "off";
+  }
+  if (on) {
+    document.documentElement.classList.add("teacher-mode");
+    return;
+  }
+  const slides = document.querySelectorAll(".reveal .slides section.teacher");
+  if (!slides.length) return;
+  slides.forEach(s => s.remove());
+  const resync = () => { Reveal.sync(); const i = Reveal.getIndices(); Reveal.slide(i.h, i.v); };
+  if (Reveal.isReady && Reveal.isReady()) resync(); else Reveal.on("ready", resync);
+})();
+</script>

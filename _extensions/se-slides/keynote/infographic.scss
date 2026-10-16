@@ -481,6 +481,140 @@ html.print-pdf .reveal .slides section.profile .hero img {
   line-height: 1.1;
 }
 
+// ---------- Exercise ----------
+// ::: {.exercise}  badges ([25 min]{.badge}), a numbered list of steps (each item: **Title** text),
+// and a picture of the student sheet (a lone image, linked or not): steps on the left, the sheet
+// on the right as a paper page. Without a picture, the steps take the whole width.
+
+.reveal .exercise {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--sheet-w, 340px);
+  grid-template-rows: auto 1fr;
+  column-gap: 36px;
+  row-gap: 14px;
+  margin-top: 8px;
+}
+
+.reveal .exercise:not(:has(img)) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.reveal .exercise > p:first-child {
+  grid-column: 1;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.reveal .exercise .badge {
+  display: inline-block;
+  padding: 3px 14px;
+  border: 2px solid var(--accent);
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--accent);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.reveal .exercise > ol {
+  grid-column: 1;
+  list-style: none;
+  counter-reset: ex-step;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.reveal .exercise > ol > li {
+  counter-increment: ex-step;
+  position: relative;
+  margin: 0;
+  padding: 12px 18px 12px 74px;
+  min-height: 48px;
+  border-radius: 6px;
+  background: var(--panel);
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.reveal .exercise > ol > li::before {
+  content: counter(ex-step);
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--r-background-color, #000);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 42px;
+  text-align: center;
+}
+
+.reveal .exercise > ol > li strong:first-child {
+  display: block;
+  color: var(--accent);
+  font-size: 26px;
+  font-weight: 600;
+}
+
+// the sheet: the last paragraph (or figure), a paper page
+.reveal .exercise > :is(p, figure, div):last-child:not(:first-child) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
+  margin: 6px 0 0 0;
+}
+
+.reveal .exercise > :is(p, figure, div):last-child:not(:first-child) img {
+  display: block;
+  width: 100%;
+  max-height: 500px;
+  object-fit: contain;
+  object-position: top;
+  margin: 0;
+  background: #fff;
+  border-radius: 2px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.3);
+  transition: scale 0.25s ease;
+}
+
+.reveal .exercise > :is(p, figure, div):last-child:not(:first-child) a:hover img {
+  scale: 1.02;
+}
+
+.reveal .exercise figcaption {
+  display: none;
+}
+
+// ---------- Teacher slides ----------
+// Slides with .teacher are removed for students (theme.html); in teacher mode they carry a small tag.
+
+.teacher-mode .reveal .slides section.teacher::after {
+  content: "Teacher";
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  padding: 2px 12px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--r-background-color, #000);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+:lang(fr) .teacher-mode .reveal .slides section.teacher::after { content: "Enseignant"; }
+:lang(de) .teacher-mode .reveal .slides section.teacher::after { content: "Lehrperson"; }
+
 // ---------- Takeaway ----------
 
 .reveal .takeaway {

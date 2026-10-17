@@ -19,6 +19,9 @@ $info-overlay: if($_info-dark-bg, rgba(mix(#000, $body-bg, 45%), 0.8), rgba($bod
 $info-overlay-color: $body-color !default;
 $info-ghost: rgba($body-color, 0.07) !default;
 $info-on-accent: if($_info-dark-bg, $body-bg, $body-color) !default;
+// the accent of the htimeline extension (current event, marker, box): the heading colour; false keeps the link colour
+// (false, not null: !default would overwrite a null)
+$timeline-accent: $presentation-heading-color !default;
 // the glow behind the cover title: a shadow on dark palettes, a halo of the page colour on light ones
 $info-title-shadow: if($_info-dark-bg, (0 0 40px rgba(0, 0, 0, 0.6)), (0 0 24px rgba($body-bg, 0.95), 0 0 6px rgba($body-bg, 0.9))) !default;
 
@@ -896,4 +899,9 @@ html.print-pdf .reveal .chart .curve.draw {
 .reveal .chart .fragment.visible .curve.dashed.draw,
 html.print-pdf .reveal .chart .curve.dashed.draw {
   clip-path: inset(-10px -10px -10px -10px);
+}
+
+// htimeline: the accent follows the headings (htimeline.css sets it from the link colour on `.reveal .htimeline`)
+@if $timeline-accent {
+  .reveal .slides .htimeline { --htl-accent: #{$timeline-accent}; }
 }

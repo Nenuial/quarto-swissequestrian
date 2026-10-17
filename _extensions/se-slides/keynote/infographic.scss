@@ -19,6 +19,8 @@ $info-overlay: if($_info-dark-bg, rgba(mix(#000, $body-bg, 45%), 0.8), rgba($bod
 $info-overlay-color: $body-color !default;
 $info-ghost: rgba($body-color, 0.07) !default;
 $info-on-accent: if($_info-dark-bg, $body-bg, $body-color) !default;
+// the glow behind the cover title: a shadow on dark palettes, a halo of the page colour on light ones
+$info-title-shadow: if($_info-dark-bg, (0 0 40px rgba(0, 0, 0, 0.6)), (0 0 24px rgba($body-bg, 0.95), 0 0 6px rgba($body-bg, 0.9))) !default;
 
 .reveal {
   --accent: #{$info-accent};
@@ -393,7 +395,7 @@ html.print-pdf .reveal .slides section.profile .hero img {
   font-weight: 700;
   line-height: 1;
   color: var(--cover-accent, var(--accent));
-  text-shadow: 0 0 40px rgba(0, 0, 0, 0.6);
+  text-shadow: $info-title-shadow;
 }
 
 // a short accent bar under the title

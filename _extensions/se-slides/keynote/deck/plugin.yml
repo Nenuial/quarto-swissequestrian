@@ -1,0 +1,5 @@
+# The slides of the deck, settled before Reveal lays them out (and before it builds the scroll view,
+# which wraps every slide in a page of its own): the teacher slides taken out, the references split.
+name: RevealKeynoteDeck
+script:
+  - deck.js

@@ -531,3 +531,47 @@ span.term {
 .reveal div.callout-title {
   color: $body-color !important;
 }
+
+// Tabs (::: {.panel-tabset}): drawn as tabs at every width, like the tabs of the GeoDoc site (Bootstrap's
+// nav-tabs): a line under the row, the open tab framed on three sides in the colour of the slide, the others
+// as links. Tabby's own styles turn them into stacked blocks below 30em, a width the scroll view of a phone
+// reaches though the slide stays 1280px wide; and the square bullets of the lists above must not reach them.
+.reveal .panel-tabset [role="tablist"] {
+  display: flex !important;
+  flex-wrap: wrap;
+  list-style: none !important;
+  margin: 0 0 0.5em !important;
+  padding: 0 !important;
+  border-bottom: 1px solid rgba($body-color, 0.35) !important;
+}
+
+.reveal .panel-tabset [role="tablist"] li {
+  display: block !important;
+  margin: 0 0 -1px !important;
+  padding: 0 !important;
+}
+
+.reveal .panel-tabset [role="tablist"] li::marker {
+  content: none;
+}
+
+.reveal .panel-tabset [role="tab"] {
+  display: block !important;
+  margin: 0 !important;
+  padding: 0.3em 1.2em !important;
+  border: 1px solid transparent !important;
+  border-radius: 0.25em 0.25em 0 0;
+  background: transparent !important;
+  color: $link-color;
+  text-decoration: none;
+}
+
+.reveal .panel-tabset [role="tab"]:hover:not([aria-selected="true"]) {
+  border-color: rgba($body-color, 0.15) rgba($body-color, 0.15) transparent !important;
+}
+
+.reveal .panel-tabset [role="tab"][aria-selected="true"] {
+  border-color: rgba($body-color, 0.35) rgba($body-color, 0.35) $body-bg !important;
+  background: $body-bg !important;
+  color: $body-color;
+}

@@ -335,8 +335,9 @@ html.print-pdf .reveal .slides section.profile .hero img {
   align-items: flex-end;
 }
 
-// the credit of the attribution plugin runs along the right edge, over the picture: give it a backdrop
-.reveal .slides section.part:has(.part-img.bleed) .attribution p {
+// the credit of the attribution plugin runs along the right edge, over the picture of a chapter opener
+// (.part-img.bleed) or of a slide with a picture at its right edge (.image-right): give it a backdrop
+.reveal .slides section:has(.part-img.bleed, .image-right) .attribution p {
   display: inline-block;
   margin: 0;
   padding: 8px 4px;

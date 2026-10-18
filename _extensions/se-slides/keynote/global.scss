@@ -575,3 +575,55 @@ span.term {
   background: $body-bg !important;
   color: $body-color;
 }
+
+// A picture beside boxes or text (::: {.column .fill-picture}): the picture fills its column, whose height is
+// the height of the row, and is cropped to it, so its top and bottom line up with the boxes of the other column.
+// The cards of that row lose their top margin, so their first box starts at the top of the picture.
+// .fill-picture.stack: two pictures, one above the other, splitting the height.
+.reveal .column.fill-picture {
+  position: relative;
+}
+
+// the wrappers of the picture (paragraph, lightbox link, figure) must not be the box it fills
+.reveal .column.fill-picture :is(p, a, figure, div) {
+  position: static;
+  margin: 0;
+}
+
+.reveal .column.fill-picture img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;    // Reveal keeps images within 95 %
+  max-height: none;
+  margin: 0;
+  object-fit: cover;
+}
+
+.reveal .column.fill-picture.stack img {
+  height: calc(50% - 8px);   // an image is not stretched by top and bottom: its height is given
+}
+
+.reveal .column.fill-picture.stack > :first-child img {
+  inset: 0 0 auto 0;
+}
+
+.reveal .column.fill-picture.stack > :last-child img {
+  inset: auto 0 0 0;
+}
+
+// Quarto's columns are inline blocks: in such a row they become flex items, so that they share its height
+.reveal .columns:has(> .column.fill-picture) {
+  display: flex;
+  align-items: stretch;
+}
+
+.reveal .columns:has(> .column.fill-picture) > .column {
+  display: block;
+  flex: none;
+}
+
+.reveal .columns:has(> .column.fill-picture) .cards {
+  margin-top: 0;
+}

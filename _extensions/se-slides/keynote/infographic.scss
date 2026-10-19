@@ -528,7 +528,7 @@ html.print-pdf .reveal .slides section.profile .hero img {
 .reveal .exercise > ol {
   grid-column: 1;
   list-style: none;
-  counter-reset: ex-step;
+  counter-reset: ex-step var(--ex-start, 0);   // --ex-start: 5 on the .exercise: the list goes on from 6
   margin: 0;
   padding: 0;
   display: grid;

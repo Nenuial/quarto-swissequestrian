@@ -352,6 +352,8 @@ html.print-pdf .reveal .slides section.profile .hero img {
 //     data-cover: images/head.png      picture on the right of the letterbox (2:3 portrait)
 //     data-cover-accent: "#ffb15c"     colour of the title and its bar (default: --accent)
 //     data-cover-blend: lighten        optional: the dark areas of the picture take the slide colour
+//     data-cover-position: "30% 50%"   optional: which part of the picture the frame shows (default: center),
+//                                      as a CSS background-position: "right", "25% 40%"…
 
 // Reveal centres the slide by its height, which the picture exceeds: the block is placed instead.
 // Not in the scroll view (small screens), where Reveal centres every slide in its page itself.
@@ -374,7 +376,7 @@ html.print-pdf .reveal .slides section.profile .hero img {
   z-index: -1;
   pointer-events: none;
   background-image: var(--cover-img);
-  background-position: center;
+  background-position: var(--cover-pos, center);
   background-size: cover;
   background-repeat: no-repeat;
   background-color: var(--r-background-color);

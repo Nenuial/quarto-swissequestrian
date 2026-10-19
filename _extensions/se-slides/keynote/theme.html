@@ -1,6 +1,6 @@
 <script>
 // Cover title slide (infographic.scss): the picture and the colours given in title-slide-attributes
-// (data-cover, data-cover-accent, data-cover-blend). The picture's URL is made absolute here, so
+// (data-cover, data-cover-accent, data-cover-blend, data-cover-position). The picture's URL is made absolute here, so
 // that it is relative to the deck and not to the theme's stylesheet.
 (function () {
   const slide = document.getElementById("title-slide");
@@ -14,6 +14,9 @@
   }
   if (slide.dataset.coverBlend) {
     slide.style.setProperty("--cover-blend", slide.dataset.coverBlend);
+  }
+  if (slide.dataset.coverPosition) {
+    slide.style.setProperty("--cover-pos", slide.dataset.coverPosition);
   }
 })();
 </script>

@@ -346,3 +346,18 @@ document.querySelectorAll(".reveal .slides [data-accent]").forEach(el => {
   else Reveal.on("ready", start);
 })();
 </script>
+
+<script>
+// Copy: the titles are set in capitals by the CSS (text-transform), and Chrome and Safari copy them as shown.
+// A selection inside such an element is copied as it is written in the source.
+document.addEventListener("copy", e => {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.rangeCount || !e.clipboardData) return;
+  const range = sel.getRangeAt(0);
+  let el = range.commonAncestorContainer;
+  if (el.nodeType !== 1) el = el.parentElement;
+  if (!el || getComputedStyle(el).textTransform === "none") return;
+  e.clipboardData.setData("text/plain", range.cloneContents().textContent);
+  e.preventDefault();
+});
+</script>

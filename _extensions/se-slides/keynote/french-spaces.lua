@@ -1,4 +1,5 @@
--- French typography in decks whose `lang` is French (fr, fr-CH…): the spaces that must not break become
+-- French typography in decks whose `lang` is French (fr, fr-CH…), and in every language a number with its % or ‰
+-- (51.6 %): the spaces that must not break become
 -- non-breaking spaces (U+00A0, as wide as a space), so that a line never starts with ; : ! ? » or a unit:
 --   before ; : ! ? » and after «         « texte » ; vraiment ?
 --   « and » with no space are given one  «texte» -> « texte »
@@ -97,11 +98,22 @@ local function fix_inlines(inl)
   return inl
 end
 
+-- in every language: a number and its % or ‰ (51.6 %) do not break either
+local function percent_inlines(inl)
+  for i = 2, #inl - 1 do
+    local nxt = inl[i + 1]
+    if is_space(inl[i]) and inl[i - 1].t == "Str" and inl[i - 1].text:match("%d$") and nxt.t == "Str"
+      and (starts(nxt.text, "%") or starts(nxt.text, "‰")) then
+      inl[i] = pandoc.Str(NB)
+    end
+  end
+  return inl
+end
+
 return {
   {
     Pandoc = function(doc)
-      if not french(doc.meta) then return nil end
-      return doc:walk({ Inlines = fix_inlines })
+      return doc:walk({ Inlines = french(doc.meta) and fix_inlines or percent_inlines })
     end,
   },
 }

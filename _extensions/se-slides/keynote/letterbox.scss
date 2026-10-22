@@ -200,6 +200,12 @@ figure:has(img.no-caption) figcaption {
   @include full-screen;
 }
 
+// The colour of a slide's background is drawn inside the slide (.background-color-div, theme.html), not by Reveal
+// across the whole window: Reveal's layer stays transparent, also when it is built again after a configure()
+.reveal .slide-background {
+  background-color: transparent !important;
+}
+
 .background-video-div,
 .background-iframe-div {
   @include full-screen;

@@ -22,7 +22,9 @@
 </script>
 
 <script>
-// Copy over background colors to new div
+// Copy over background colors to new div. The slide keeps data-background-color: Reveal reads it each time it
+// builds its backgrounds (configure, sync) to mark the slide .has-dark-background or .has-light-background, which
+// sets the colour of the text; the colour Reveal paints in its own layer is made transparent (letterbox.scss)
 divs = document.querySelectorAll('[data-background-color]');
 
 Array.from(divs).map(function (x) {
@@ -32,7 +34,6 @@ Array.from(divs).map(function (x) {
   new_div.setAttribute("class", "background-color-div");
   new_div.style.backgroundColor = color;
   x.appendChild(new_div);
-  x.removeAttribute("data-background-color");
 })
 
 // Remove background colors from backgrounds div

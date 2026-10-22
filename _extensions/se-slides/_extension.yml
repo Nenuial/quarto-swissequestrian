@@ -13,6 +13,7 @@ contributes:
       filters:
         - keynote/custom-callouts.lua
         - keynote/badges.lua
+        - keynote/french-spaces.lua
       revealjs-plugins:
         - keynote/deck
       width: 1280

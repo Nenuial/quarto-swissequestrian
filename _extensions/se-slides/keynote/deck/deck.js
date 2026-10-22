@@ -8,7 +8,31 @@
 //
 // References: a list taller than the slide is split over several slides with the same title and a page
 // count ("References 1/2"), instead of one scrolling slide; measured again when the web fonts are loaded.
+//
+// French citations and references: citeproc writes them after the filters, so french-spaces.lua does not reach
+// them; their spaces before ; : ! ? » and after « become non-breaking here, before the references are measured.
 window.RevealKeynoteDeck = function () {
+  function frenchCitations() {
+    if (!/^fr/i.test(document.documentElement.lang || "")) return;
+    const NB = "\u00a0";
+    document.querySelectorAll(".reveal .slides .citation, .reveal .slides #refs").forEach(root => {
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach((n, i) => {
+        let t = n.nodeValue.replace(/ (?=[;:!?»])/g, NB).replace(/« /g, "«" + NB).replace(/«(?=[^\s\u00a0])/g, "«" + NB);
+        // across two nodes (a title in italics, then " : 1547"): the space at the end of one, the sign at the start of the next
+        const next = nodes[i + 1] && nodes[i + 1].nodeValue;
+        if (next !== undefined) {
+          if (/ $/.test(t) && /^[;:!?»]/.test(next)) t = t.slice(0, -1) + NB;
+          if (/«$/.test(t) && /^[^\s\u00a0]/.test(next)) t += NB;
+        }
+        if (i > 0 && /«$/.test(nodes[i - 1].nodeValue)) t = t.replace(/^ /, NB);
+        if (t !== n.nodeValue) n.nodeValue = t;
+      });
+    });
+  }
+
   function teacher() {
     const KEY = "keynote-teacher", q = new URLSearchParams(location.search);
     let on = false;
@@ -148,6 +172,7 @@ window.RevealKeynoteDeck = function () {
     init: deck => {
       const before = Array.from(document.querySelectorAll(".reveal .slides > section")).map(s => s.id);
       teacher();
+      frenchCitations();
       references(deck);
       deck.on("ready", () => syncMenu(deck, before));
     },
